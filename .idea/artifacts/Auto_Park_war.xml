@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Auto_Park:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Auto_Park</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Auto_Park-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Auto_Park:war exploded" />
+    </root>
+  </artifact>
+</component>
