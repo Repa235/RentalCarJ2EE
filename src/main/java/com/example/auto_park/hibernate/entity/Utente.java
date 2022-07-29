@@ -1,6 +1,4 @@
-package com.example.auto_park.hibernate.entity.utente;
-
-import com.example.auto_park.hibernate.entity.prenotazione.Prenotazione;
+package com.example.auto_park.hibernate.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -25,8 +23,8 @@ public class Utente implements Serializable {
     @Column(name = "cognome")
     private String cognome;
 
-    @Column(name = "data_nascita")
-    private Date data_nascita;
+    @Column(name = "dataNascita")
+    private Date dataNascita;
 
     @Column(name = "tipo")
     private String tipo;
@@ -43,11 +41,21 @@ public class Utente implements Serializable {
     public Utente() {
     }
 
-    public Utente(Long id, String nome, String cognome, Date data_nascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
+    public Utente(Long id, String nome, String cognome, Date dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
-        this.data_nascita = data_nascita;
+        this.dataNascita = dataNascita;
+        this.tipo = tipo;
+        this.username = username;
+        this.password = password;
+        this.prenotazioni = prenotazioni;
+    }
+
+    public Utente(String nome, String cognome, Date dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataNascita = dataNascita;
         this.tipo = tipo;
         this.username = username;
         this.password = password;
@@ -78,12 +86,12 @@ public class Utente implements Serializable {
         this.cognome = cognome;
     }
 
-    public Date getData_nascita() {
-        return data_nascita;
+    public Date getDataNascita() {
+        return dataNascita;
     }
 
-    public void setData_nascita(Date data_nascita) {
-        this.data_nascita = data_nascita;
+    public void setDataNascita(Date dataNascita) {
+        this.dataNascita = dataNascita;
     }
 
     public String getTipo() {
@@ -118,17 +126,16 @@ public class Utente implements Serializable {
         this.prenotazioni = prenotazioni;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Utente)) return false;
         Utente utente = (Utente) o;
-        return Objects.equals(getId(), utente.getId()) && Objects.equals(getNome(), utente.getNome()) && Objects.equals(getCognome(), utente.getCognome()) && Objects.equals(getData_nascita(), utente.getData_nascita()) && Objects.equals(getTipo(), utente.getTipo()) && Objects.equals(getUsername(), utente.getUsername()) && Objects.equals(getPassword(), utente.getPassword()) && Objects.equals(getPrenotazioni(), utente.getPrenotazioni());
+        return Objects.equals(getId(), utente.getId()) && Objects.equals(getNome(), utente.getNome()) && Objects.equals(getCognome(), utente.getCognome()) && Objects.equals(getDataNascita(), utente.getDataNascita()) && Objects.equals(getTipo(), utente.getTipo()) && Objects.equals(getUsername(), utente.getUsername()) && Objects.equals(getPassword(), utente.getPassword()) && Objects.equals(getPrenotazioni(), utente.getPrenotazioni());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNome(), getCognome(), getData_nascita(), getTipo(), getUsername(), getPassword(), getPrenotazioni());
+        return Objects.hash(getId(), getNome(), getCognome(), getDataNascita(), getTipo(), getUsername(), getPassword(), getPrenotazioni());
     }
 }

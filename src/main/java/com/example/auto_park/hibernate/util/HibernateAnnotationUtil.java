@@ -1,8 +1,8 @@
 package com.example.auto_park.hibernate.util;
 
-import com.example.auto_park.hibernate.entity.prenotazione.Prenotazione;
-import com.example.auto_park.hibernate.entity.utente.Utente;
-import com.example.auto_park.hibernate.entity.veicolo.Veicolo;
+import com.example.auto_park.hibernate.entity.Prenotazione;
+import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.Veicolo;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;

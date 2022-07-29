@@ -14,7 +14,7 @@
     <br>
     Cognome: <input type="text" name="cognome">
     <br>
-    Data di nascita: <input type="date" name="data_nascita">
+    Data di nascita: <input type="date" name="dataNascita">
     <br>
     Tipo: <input type="text" name="tipo">
     <br>
