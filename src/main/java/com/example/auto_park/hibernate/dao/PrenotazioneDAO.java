@@ -1,18 +1,20 @@
 package com.example.auto_park.hibernate.dao;
 
-import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.Prenotazione;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class UtenteDAO {
+import java.util.List;
+
+public class PrenotazioneDAO {
     private HibernateAnnotationUtil HibernateUtil;
 
-    public Utente getUtente(Utente c) {
+    public Prenotazione getPrenotazione(Prenotazione c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            c = (Utente) session.get(Utente.class, c.getId());
+            c = (Prenotazione) session.get(Prenotazione.class, c.getId());
         } catch (HibernateException e) {
             return null;
         } finally {
@@ -22,7 +24,22 @@ public class UtenteDAO {
         return c;
     }
 
-    public boolean saveOrUpdateUtente(Utente c) {
+    public List<Prenotazione> getPrenotazioni() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Prenotazione> lp;
+        try {
+            //lp = (List<Prenotazione>) session.createQuery("from Prenotazione").list(); //con HQL non funziona
+            lp = (List<Prenotazione>) session.createQuery("from Prenotazione").list();
+        } catch (HibernateException e) {
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+        return lp;
+    }
+
+    public boolean saveOrUpdatePrenotazione(Prenotazione c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         boolean result = false;
@@ -41,7 +58,7 @@ public class UtenteDAO {
         return result;
     }
 
-    public boolean deleteUtente(Utente c) {
+    public boolean deletePrenotazione(Prenotazione c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         boolean result = false;
@@ -59,5 +76,4 @@ public class UtenteDAO {
         }
         return result;
     }
-
 }

@@ -7,12 +7,11 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @WebServlet(name = "InserisciUtente", value = "/InserisciUtente")
-public class InserisciUtente extends HttpServlet {
+public class AggiungiUtente extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -25,14 +24,13 @@ public class InserisciUtente extends HttpServlet {
         String dataNascitaString = request.getParameter("dataNascita");
         Date dataNascita = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
         try {
             dataNascita = sdf.parse(dataNascitaString);
         } catch (Exception e) {
             System.out.println("Impossibile prelevare la data");
         }
 
-        String tipo = request.getParameter("tipo");
+        String tipo = "customer";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -42,12 +40,7 @@ public class InserisciUtente extends HttpServlet {
         ud.saveOrUpdateUtente(u);
         System.out.println("Aggiunto");
 
-        response.setContentType("text/h" +
-                "tml");
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + "Complimenti " + nome + " " + cognome + " sei stato aggiunto!" + "</h1>");
-        out.println("</body></html>");
 
+        request.getRequestDispatcher("successo.jsp").forward(request,response);
     }
 }

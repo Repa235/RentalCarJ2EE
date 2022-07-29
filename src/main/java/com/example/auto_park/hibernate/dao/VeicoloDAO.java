@@ -1,18 +1,22 @@
 package com.example.auto_park.hibernate.dao;
 
-import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.Prenotazione;
+import com.example.auto_park.hibernate.entity.Veicolo;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class UtenteDAO {
+import java.util.ArrayList;
+import java.util.List;
+
+public class VeicoloDAO {
     private HibernateAnnotationUtil HibernateUtil;
 
-    public Utente getUtente(Utente c) {
+    public Veicolo getVeicolo(Veicolo c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            c = (Utente) session.get(Utente.class, c.getId());
+            c = (Veicolo) session.get(Veicolo.class, c.getId());
         } catch (HibernateException e) {
             return null;
         } finally {
@@ -21,8 +25,21 @@ public class UtenteDAO {
         }
         return c;
     }
+    public List<Veicolo> getVeicoli() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Veicolo> lp;
+        try {
+            lp = (List<Veicolo>) session.createQuery("from Veicolo").list();
+        } catch (HibernateException e) {
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+        return lp;
+    }
 
-    public boolean saveOrUpdateUtente(Utente c) {
+    public boolean saveOrUpdateVeicolo(Veicolo c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         boolean result = false;
@@ -41,7 +58,7 @@ public class UtenteDAO {
         return result;
     }
 
-    public boolean deleteUtente(Utente c) {
+    public boolean deleteVeicolo(Veicolo c) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         boolean result = false;
@@ -59,5 +76,4 @@ public class UtenteDAO {
         }
         return result;
     }
-
 }

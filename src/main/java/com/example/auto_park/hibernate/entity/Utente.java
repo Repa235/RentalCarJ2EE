@@ -13,7 +13,7 @@ public class Utente implements Serializable {
 
     //Id dell'utente
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -35,10 +35,14 @@ public class Utente implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
     private Set<Prenotazione> prenotazioni = new HashSet<>();
 
     public Utente() {
+    }
+
+    public Utente(Long id) {
+        this.id = id;
     }
 
     public Utente(Long id, String nome, String cognome, Date dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
@@ -136,6 +140,6 @@ public class Utente implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNome(), getCognome(), getDataNascita(), getTipo(), getUsername(), getPassword(), getPrenotazioni());
+        return Objects.hash(getId(), getNome(), getCognome(), getDataNascita(), getTipo(), getUsername(), getPassword());
     }
 }

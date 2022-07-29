@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "veicolo")
 public class Veicolo implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -24,12 +24,19 @@ public class Veicolo implements Serializable {
     private int annoImmatricolazione;
 
     @Column(name = "tipo")
-    private int tipo;
+    private String tipo;
 
-    @OneToMany(mappedBy = "veicolo")
+    @OneToMany(mappedBy = "veicolo", fetch = FetchType.EAGER)
     private Set<Prenotazione> prenotazioni = new HashSet<>();
 
-    public Veicolo(Long id, String casaCostruttrice, String modello, int annoImmatricolazione, int tipo, Set<Prenotazione> prenotazioni) {
+    public Veicolo(String casaCostruttrice, String modello, int annoImmatricolazione, String tipo) {
+        this.casaCostruttrice = casaCostruttrice;
+        this.modello = modello;
+        this.annoImmatricolazione = annoImmatricolazione;
+        this.tipo = tipo;
+    }
+
+    public Veicolo(Long id, String casaCostruttrice, String modello, int annoImmatricolazione, String tipo, Set<Prenotazione> prenotazioni) {
         this.id = id;
         this.casaCostruttrice = casaCostruttrice;
         this.modello = modello;
@@ -38,15 +45,11 @@ public class Veicolo implements Serializable {
         this.prenotazioni = prenotazioni;
     }
 
-    public Veicolo(String casaCostruttrice, String modello, int annoImmatricolazione, int tipo, Set<Prenotazione> prenotazioni) {
-        this.casaCostruttrice = casaCostruttrice;
-        this.modello = modello;
-        this.annoImmatricolazione = annoImmatricolazione;
-        this.tipo = tipo;
-        this.prenotazioni = prenotazioni;
+    public Veicolo() {
     }
 
-    public Veicolo() {
+    public Veicolo(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -81,11 +84,11 @@ public class Veicolo implements Serializable {
         this.annoImmatricolazione = annoImmatricolazione;
     }
 
-    public int getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -102,11 +105,12 @@ public class Veicolo implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Veicolo)) return false;
         Veicolo veicolo = (Veicolo) o;
-        return getAnnoImmatricolazione() == veicolo.getAnnoImmatricolazione() && getTipo() == veicolo.getTipo() && Objects.equals(getId(), veicolo.getId()) && Objects.equals(getCasaCostruttrice(), veicolo.getCasaCostruttrice()) && Objects.equals(getModello(), veicolo.getModello()) && Objects.equals(getPrenotazioni(), veicolo.getPrenotazioni());
+        return getAnnoImmatricolazione() == veicolo.getAnnoImmatricolazione() && Objects.equals(getId(), veicolo.getId()) && Objects.equals(getCasaCostruttrice(), veicolo.getCasaCostruttrice()) && Objects.equals(getModello(), veicolo.getModello()) && Objects.equals(getTipo(), veicolo.getTipo()) && Objects.equals(getPrenotazioni(), veicolo.getPrenotazioni());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCasaCostruttrice(), getModello(), getAnnoImmatricolazione(), getTipo(), getPrenotazioni());
+        return Objects.hash(getId(), getCasaCostruttrice(), getModello(), getAnnoImmatricolazione(), getTipo());
     }
 }
+

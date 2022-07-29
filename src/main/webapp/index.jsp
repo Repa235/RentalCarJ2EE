@@ -2,27 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Homepage</title>
 </head>
 <body>
-<h1><%= "Form registrazione utente" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
-<form action="InserisciUtente" method="post">
-    Nome: <input type="text" name="nome">
-    <br>
-    Cognome: <input type="text" name="cognome">
-    <br>
-    Data di nascita: <input type="date" name="dataNascita">
-    <br>
-    Tipo: <input type="text" name="tipo">
-    <br>
-    Username: <input type="text" name="username">
-    <br>
-    Password: <input type="password" name="password">
-    <br>
-    <input type="submit" name="Registra">
+<%@include file="header.jsp"%>
+<h1>Benvenuto nel parco auto SI2001</h1>
+
+<a href="profiloSuper.jsp"> Accesso Super </a>
+<a href="profiloCustomer.jsp"> Accesso Customer </a>
+
 </form>
 </body>
 </html>
