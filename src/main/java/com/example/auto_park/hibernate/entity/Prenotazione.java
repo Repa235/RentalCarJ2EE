@@ -48,6 +48,10 @@ public class Prenotazione implements Serializable {
         this.isApprovato = isApprovato;
     }
 
+    public Prenotazione(Long id) {
+        this.id = id;
+    }
+
     public Prenotazione() {
     }
 

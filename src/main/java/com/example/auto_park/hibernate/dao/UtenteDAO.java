@@ -1,10 +1,13 @@
 package com.example.auto_park.hibernate.dao;
 
 import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 public class UtenteDAO {
     private HibernateAnnotationUtil HibernateUtil;
@@ -28,7 +31,8 @@ public class UtenteDAO {
         boolean result = false;
         try {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(c); ;
+            session.saveOrUpdate(c);
+            ;
             transaction.commit();
             result = true;
         } catch (Exception e) {
@@ -59,5 +63,36 @@ public class UtenteDAO {
         }
         return result;
     }
+
+    public List<Utente> getCustomers() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Utente> lp;
+        try {
+            lp = (List<Utente>) session.createQuery("from Utente where tipo = 'customer'").list();
+        } catch (HibernateException e) {
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+        return lp;
+    }
+
+    public List<Utente> getUsersByUsername(Utente utente) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Utente> lp;
+        try {
+            lp = (List<Utente>) session.createQuery("from Utente where username=:un")
+                    .setParameter("un",utente.getUsername())
+                    .list();
+        } catch (HibernateException e) {
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+        return lp;
+    }
+
 
 }

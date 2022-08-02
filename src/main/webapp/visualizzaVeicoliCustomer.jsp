@@ -25,11 +25,15 @@
     <tr>
         <th>Casa costruttrice</th>
         <th>Modello</th>
+        <th>Anno</th>
+        <th>Tipologia veicolo</th>
     </tr>
     <c:forEach var="ve" items="${listaveicoli}">
         <tr>
             <td>${ve.casaCostruttrice}</td>
             <td>${ve.modello}</td>
+            <td>${ve.annoImmatricolazione}</td>
+            <td>${ve.tipo}</td>
         </tr>
     </c:forEach>
 </table>

@@ -7,15 +7,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.auto_park.hibernate.entity.Veicolo" %>
+<%
+    Utente u = (Utente) request.getAttribute("utente");
+    request.setAttribute("utente",u);
+%>
 <html>
 <head>
-    <title>Aggingi veicolo</title>
+    <title>Prenota veicolo</title>
 </head>
 <body>
 <%@include file="header.jsp"%>
 <h1>Prenota un'auto</h1>
 <form action="PrenotaVeicolo" method="post">
-    <input type="hidden" name="idUtente" value="1">
+    <input type="hidden" name="idUtente" value="${utente.id}">
     <br>
     Data inizio: <input name="dataInizio" type="date">
     <br>

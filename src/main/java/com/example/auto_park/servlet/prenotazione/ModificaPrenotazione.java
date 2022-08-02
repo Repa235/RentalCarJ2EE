@@ -1,4 +1,4 @@
-package com.example.auto_park.servlet.veicolo;
+package com.example.auto_park.servlet.prenotazione;
 
 import com.example.auto_park.hibernate.dao.PrenotazioneDAO;
 import com.example.auto_park.hibernate.dao.UtenteDAO;
@@ -14,17 +14,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet(name = "PrenotaVeicolo", value = "/PrenotaVeicolo")
-public class PrenotaVeicolo extends HttpServlet {
+@WebServlet(name = "ModificaPrenotazione", value = "/ModificaPrenotazione")
+public class ModificaPrenotazione extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long idUtente = Long.parseLong(request.getParameter("idUtente"));
+        Long idPrenotazione = Long.parseLong(request.getParameter("idPrenotazione"));
         String dataInizioString = request.getParameter("dataInizio");
         String dataFineString = request.getParameter("dataFine");
         Date dataInizio = null;
@@ -37,13 +36,13 @@ public class PrenotaVeicolo extends HttpServlet {
             System.out.println("Impossibile prelevare la data");
         }
         Long idVeicolo = Long.parseLong(request.getParameter("veicolo"));
-
+        PrenotazioneDAO pd = new PrenotazioneDAO();
         VeicoloDAO vd = new VeicoloDAO();
         Veicolo v = vd.getVeicolo(new Veicolo(idVeicolo));
-        UtenteDAO ud = new UtenteDAO();
-        Utente u = ud.getUtente(new Utente(idUtente));
-        PrenotazioneDAO pd = new PrenotazioneDAO();
-        Prenotazione p = new Prenotazione(u,v,dataInizio,dataFine,false);
+        Prenotazione p = pd.getPrenotazione(new Prenotazione(idPrenotazione));
+        p.setDataInizio(dataInizio);
+        p.setDataFine(dataFine);
+
         pd.saveOrUpdatePrenotazione(p);
         request.getRequestDispatcher("successo.jsp").forward(request,response);
     }

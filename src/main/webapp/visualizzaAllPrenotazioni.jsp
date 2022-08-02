@@ -11,8 +11,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Prenotazione" %>
 <%
-    Set<Prenotazione> listaPrenotazioni = new HashSet<Prenotazione>();
-    listaPrenotazioni = (Set<Prenotazione>) request.getAttribute("lp");
+    List<Prenotazione> listaPrenotazioni = new ArrayList<>();
+    listaPrenotazioni = (List<Prenotazione>) request.getAttribute("lp");
     request.setAttribute("listaprenotazioni", listaPrenotazioni);
 %>
 <html>
@@ -50,6 +50,29 @@
                 </form>
             </td>
         </tr>
+            </c:when>
+        </c:choose>
+    </c:forEach>
+</table>
+<h2>Lista delle prenotazioni gestite</h2>
+<table border="1">
+    <tr>
+        <th>Data inizio</th>
+        <th>Data fine</th>
+        <th>Richiedente</th>
+        <th>Veicolo</th>
+
+    </tr>
+    <c:forEach var="prenotazione" items="${listaprenotazioni}">
+        <c:choose>
+            <c:when test="${prenotazione.approvato}">
+                <tr>
+
+                    <td><fmt:formatDate pattern = "dd-MM-yyyy" value = "${prenotazione.dataInizio}" /></td>
+                    <td><fmt:formatDate pattern = "dd-MM-yyyy" value = "${prenotazione.dataFine}" /></td>
+                    <td>${prenotazione.utente.nome} ${prenotazione.utente.cognome}</td>
+                    <td>${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}</td>
+                </tr>
             </c:when>
         </c:choose>
     </c:forEach>

@@ -66,6 +66,8 @@ public class Utente implements Serializable {
         this.prenotazioni = prenotazioni;
     }
 
+
+
     public Long getId() {
         return id;
     }

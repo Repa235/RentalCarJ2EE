@@ -16,8 +16,6 @@
     <br>
     Data di nascita: <input type="date" name="dataNascita">
     <br>
-    Tipo: <input type="text" name="tipo">
-    <br>
     Username: <input type="text" name="username">
     <br>
     Password: <input type="password" name="password">

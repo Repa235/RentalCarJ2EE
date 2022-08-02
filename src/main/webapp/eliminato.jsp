@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-<h1>OPERAZIONE ESEGUITA CON SUCCESSO</h1>
+<h1>IL PROFILO UTENTE È STATO CANCELLATO</h1>
 <a href="Homepage">TORNA ALLA HOME</a>
 </body>
 </html>
