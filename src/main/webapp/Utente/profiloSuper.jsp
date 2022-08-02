@@ -13,7 +13,7 @@
     <title>Superuser page</title>
 </head>
 <body>
-<%@include file="header.jsp" %>
+<%@include file="../header.jsp" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
 <%
@@ -24,7 +24,7 @@
 %>
 <h1>Profilo superuser</h1>
 <h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-<a href="formAggiungiVeicolo.jsp">Aggiungi auto</a>
+<a href="../Veicolo/formAggiungiVeicolo.jsp">Aggiungi auto</a>
 <a href="formAggiungiUtente.jsp">Inserisci customer</a>
 <a href="VisualizzaAllPrenotazioni">Lista prenotazioni</a>
 <br>

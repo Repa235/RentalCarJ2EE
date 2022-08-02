@@ -11,7 +11,7 @@
     <title>Aggingi veicolo</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <h1>Aggiungi un'auto</h1>
 <form action="AggiungiVeicolo" method="post">
     Anno di immatricolazione: <input name="annoImmatricolazione" type="number" min="1950">

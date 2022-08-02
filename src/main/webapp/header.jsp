@@ -32,8 +32,8 @@ HttpSession session1 = request.getSession();
     <a href="VisualizzaAllPrenotazioni">Lista prenotazioni</a>
 </c:if>
 <c:if test="${show}">
-    <a href="ProfiloUtente"> Profilo utente </a>
-    <a href="Logout"> Logout </a>
+    <a href="UtenteServlet?comando=profiloUtente"> Profilo utente </a>
+    <a href="UtenteServlet?comando=logout"> Logout </a>
 </c:if>
 
 </body>

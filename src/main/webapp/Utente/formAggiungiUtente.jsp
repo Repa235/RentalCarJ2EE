@@ -5,11 +5,12 @@
     <title>Aggiungi utente</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <h1><%= "Form registrazione utente" %>
 </h1>
 <br/>
-<form action="AggiungiUtente" method="post">
+<form action="UtenteServlet" method="post">
+    <input type="hidden" name="comando" value="aggiungi">
     Nome: <input type="text" name="nome">
     <br>
     Cognome: <input type="text" name="cognome">

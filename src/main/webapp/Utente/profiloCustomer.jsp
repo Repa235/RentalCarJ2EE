@@ -13,7 +13,7 @@
     <title>Customer page</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <%
     Utente ut = (Utente) request.getAttribute("customer");
     request.setAttribute("utente", ut);

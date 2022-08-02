@@ -17,7 +17,7 @@
     <title>Prenota veicolo</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <h1>Prenota un'auto</h1>
 <form action="PrenotaVeicolo" method="post">
     <input type="hidden" name="idUtente" value="${utente.id}">

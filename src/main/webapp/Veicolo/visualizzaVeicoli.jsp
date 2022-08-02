@@ -19,7 +19,7 @@
     <title>Visualizza veicoli</title>
 </head>
 <body>
-<%@include file="header.jsp" %>
+<%@include file="../header.jsp" %>
 <h2>Lista dei veicoli</h2>
 <table border="1">
     <tr>

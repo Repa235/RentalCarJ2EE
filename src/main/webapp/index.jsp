@@ -10,8 +10,9 @@
 <h1>Benvenuto nel parco auto SI2001</h1>
 
 <a href="ProfiloUtenteSuper"> Accesso Super </a>
-<a href="profiloCustomer.jsp"> Accesso Customer </a>
-<form action="Login" method="post">
+<a href="Utente/profiloCustomer.jsp"> Accesso Customer </a>
+<form action="UtenteServlet" method="post">
+    <input type="hidden" name="comando" value="login">
     Username: <input type="text" name="username">
     Password: <input type="password" name="password">
     <input type="submit" value="Login">

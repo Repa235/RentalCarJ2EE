@@ -13,7 +13,7 @@
     <title>Superuser page</title>
 </head>
 <body>
-<%@include file="header.jsp" %>
+<%@include file="../header.jsp" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
 <%

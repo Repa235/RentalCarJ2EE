@@ -22,7 +22,7 @@
     <title>Prenota veicolo</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <h1>Prenota un'auto</h1>
 <form action="ModificaPrenotazione" method="post">
     <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">

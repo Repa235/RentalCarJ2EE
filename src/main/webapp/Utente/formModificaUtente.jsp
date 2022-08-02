@@ -6,7 +6,7 @@
     <title>Modifica utente</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
 <%
 Utente utente = (Utente) request.getAttribute("utente");
