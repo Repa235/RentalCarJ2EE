@@ -16,22 +16,18 @@
 <%@include file="../header.jsp" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
-<%
-    List<Utente> clienti = (List<Utente>) request.getAttribute("clienti");
-    request.setAttribute("clienti", clienti);
-    Utente ut = (Utente) request.getAttribute("superUser");
-    request.setAttribute("utente", ut);
-%>
+
 <h1>Profilo superuser</h1>
 <h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-<a href="../Veicolo/formAggiungiVeicolo.jsp">Aggiungi auto</a>
-<a href="formAggiungiUtente.jsp">Inserisci customer</a>
-<a href="VisualizzaAllPrenotazioni">Lista prenotazioni</a>
+<a href="VeicoloServlet?comando=richiediAggiungiVeicolo">Aggiungi veicolo</a>
+<a href="UtenteServlet?comando=richiediAggiungiUtente">Inserisci customer</a>
+<a href="PrenotazioneServlet?comando=visualizzaAllPrenotazioni">Lista prenotazioni</a>
 <br>
-<form action="Filtra" method="post">
-    Filtra per:<select name="parametro">
+<form action="UtenteServlet" method="post">
+    <input type="hidden" name="comando" value="filtraUtenti">
+    Filtra per:<select name="filtraPer">
     <option value="Nome"> Nome</option>
-    <option value="Cogome"> Cognome</option>
+    <option value="Cognome"> Cognome</option>
 </select>
     Testo da cercare: <input type="text" name="text">
     <input type="submit" name="Cerca">
@@ -52,20 +48,23 @@
             <td>${cliente.cognome}</td>
             <td><fmt:formatDate pattern="dd-MM-yyyy" value="${cliente.dataNascita}"/></td>
             <td>
-                <form action="VisualizzaPrenotazioni" method="post">
+                <form action="PrenotazioneServlet" method="post">
+                    <input type="hidden" name="comando" value="visualizzaPrenotazioni">
                     <input type="hidden" name="id" value="${cliente.id}">
                     <input type="submit" value="Visualizza">
                 </form>
             </td>
             <td>
-                <form action="RichiediModificaProfilo" method="post">
+                <form action="UtenteServlet" method="post">
+                    <input type="hidden" name="comando" value="richiediModificaUtenteBySuperUser">
                     <input type="hidden" name="id" value="${cliente.id}">
                     <input type="submit" value="Modifica">
                 </form>
             </td>
             </td>
             <td>
-                <form action="EliminaProfilo" method="post">
+                <form action="UtenteServlet" method="post">
+                    <input type="hidden" name="comando" value="elimina">
                     <input type="hidden" name="id" value="${cliente.id}">
                     <input type="submit" value="Elimina">
                 </form>

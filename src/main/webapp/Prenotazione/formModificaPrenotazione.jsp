@@ -11,25 +11,20 @@
 <%@ page import="com.example.auto_park.hibernate.entity.Veicolo" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Prenotazione" %>
 <%@ page import="java.util.List" %>
-<%
-    Prenotazione p = (Prenotazione) request.getAttribute("prenotazione");
-    request.setAttribute("prenotazione", p);
-    List<Veicolo> veicoli = (List<Veicolo>) request.getAttribute("veicoli");
-    request.setAttribute("veicoli", veicoli);
-%>
+
 <html>
 <head>
-    <title>Prenota veicolo</title>
+    <title>Modifica prenotazione</title>
 </head>
 <body>
 <%@include file="../header.jsp"%>
-<h1>Prenota un'auto</h1>
+<h1> Modifica una prenotazione </h1>
 <form action="ModificaPrenotazione" method="post">
     <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
     <br>
-    Data inizio: <input name="dataInizio" type="date" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${prenotazione.dataInizio}" />">
+    Data inizio: <input name="dataInizio" type="date" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${requestScope.prenotazione.dataInizio}" />">
     <br>
-    Data fine: <input name="dataFine" type="date" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${prenotazione.dataFine}" />">
+    Data fine: <input name="dataFine" type="date" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${requestScope.prenotazione.dataFine}" />">
     <br>
     Veicolo:
     <select name="veicolo" >

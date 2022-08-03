@@ -16,10 +16,7 @@
 <%@include file="../header.jsp" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
-<%
-    List<Utente> clienti = (List<Utente>) request.getAttribute("clientiFiltrati");
-    request.setAttribute("clienti", clienti);
-%>
+
 <h1>Profilo superuser</h1>
 <h3>Risultati della ricerca</h3>
 <br>

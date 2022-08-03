@@ -6,7 +6,11 @@ import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +29,16 @@ public class VeicoloDAO {
         }
         return c;
     }
+
     public List<Veicolo> getVeicoli() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Veicolo> lp;
-        try {
-            lp = (List<Veicolo>) session.createQuery("from Veicolo").list();
-        } catch (HibernateException e) {
-            return null;
-        } finally {
-            if (session != null)
-                session.close();
-        }
-        return lp;
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Veicolo> cr = cb.createQuery(Veicolo.class);
+        Root<Veicolo> root = cr.from(Veicolo.class);
+        cr.select(root);
+        Query<Veicolo> query = session.createQuery(cr);
+        List<Veicolo> results = query.getResultList();
+        return  results;
     }
 
     public boolean saveOrUpdateVeicolo(Veicolo c) {

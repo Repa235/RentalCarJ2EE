@@ -8,26 +8,22 @@
 <body>
 <%@include file="../header.jsp"%>
 <%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
-<%
-Utente utente = (Utente) request.getAttribute("utente");
-request.setAttribute("utente",utente);
-%>
 <h1><%= "Form modifica utente" %>
 </h1>
 <br/>
 <form action="ModificaUtente" method="post">
-    <input type="hidden" name="id" value="${utente.id}">
-    Nome: <input type="text" name="nome" value="${utente.nome}">
+    <input type="hidden" name="id" value="${utenteDaModificare.id}">
+    Nome: <input type="text" name="nome" value="${utenteDaModificare.nome}">
     <br>
-    Cognome: <input type="text" name="cognome" value="${utente.cognome}">
+    Cognome: <input type="text" name="cognome" value="${utenteDaModificare.cognome}">
     <br>
-    Data di nascita: <input type="date" name="dataNascita" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${utente.dataNascita}" />">
+    Data di nascita: <input type="date" name="dataNascita" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${utenteDaModificare.dataNascita}" />">
     <br>
-    Username: <input type="text" name="username" value="${utente.username}">
+    Username: <input type="text" name="username" value="${utenteDaModificare.username}">
     <br>
-    Password: <input type="password" name="password" value="${utente.password}">
+    Password: <input type="password" name="password" value="${utenteDaModificare.password}">
     <br>
-    <input type="submit" name="Registra">
+    <input type="submit" name="Modifica">
 </form>
 </body>
 </html>

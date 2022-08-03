@@ -10,11 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Prenotazione" %>
-<%
-    Set<Prenotazione> listaPrenotazioni = new HashSet<Prenotazione>();
-    listaPrenotazioni = (Set<Prenotazione>) request.getAttribute("lp");
-    request.setAttribute("listaprenotazioni", listaPrenotazioni);
-%>
+
 <html>
 <head>
     <title>Visualizza prenotazioni</title>
@@ -40,7 +36,8 @@
             <td>${prenotazione.utente.nome} ${prenotazione.utente.cognome}</td>
             <td>${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}</td>
             <td>
-                <form method="post" action="ApprovaPrenotazione">
+                <form method="post" action="PrenotazioneServlet">
+                    <input type="hidden" name="comando" value="approvaPrenotazione">
                     <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
                     <select name="approva">
                         <option value="true">Si</option>

@@ -2,11 +2,16 @@ package com.example.auto_park.hibernate.dao;
 
 import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UtenteDAO {
@@ -92,6 +97,28 @@ public class UtenteDAO {
                 session.close();
         }
         return lp;
+    }
+
+    public List<Utente> getUtentiFiltratiByNome(String nome) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
+        Root<Utente> root = cr.from(Utente.class);
+        cr.select(root).where(cb.like(root.get("nome"), "%"+nome+"%"));
+        Query<Utente> query = session.createQuery(cr);
+        List<Utente> results = query.getResultList();
+        return  results;
+    }
+
+    public List<Utente> getUtentiFiltratiByCognome(String cognome) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
+        Root<Utente> root = cr.from(Utente.class);
+        cr.select(root).where(cb.like(root.get("cognome"), "%"+cognome+"%"));
+        Query<Utente> query = session.createQuery(cr);
+        List<Utente> results = query.getResultList();
+        return  results;
     }
 
 

@@ -13,7 +13,8 @@
 <body>
 <%@include file="../header.jsp"%>
 <h1>Aggiungi un'auto</h1>
-<form action="AggiungiVeicolo" method="post">
+<form action="VeicoloServlet" method="post">
+    <input type="hidden" name="comando" value="aggiungiVeicolo">
     Anno di immatricolazione: <input name="annoImmatricolazione" type="number" min="1950">
     <br>
     Casa costruttrice: <input name="casaCostruttrice" type="text">

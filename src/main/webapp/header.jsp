@@ -14,7 +14,7 @@
 </head>
 <body>
 <a href="Homepage"> Homepage </a>
-<a href="VisualizzaVeicoli"> Parco auto </a>
+<a href="#"> Parco auto </a>
 
 <%
 HttpSession session1 = request.getSession();
@@ -29,7 +29,7 @@ HttpSession session1 = request.getSession();
 
 %>
 <c:if test="${utente.tipo == 'superuser'}">
-    <a href="VisualizzaAllPrenotazioni">Lista prenotazioni</a>
+    <a href="PrenotazioneServlet?comando=visualizzaAllPrenotazioni">Lista prenotazioni</a>
 </c:if>
 <c:if test="${show}">
     <a href="UtenteServlet?comando=profiloUtente"> Profilo utente </a>
