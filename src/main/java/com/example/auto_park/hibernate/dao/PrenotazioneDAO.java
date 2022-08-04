@@ -21,31 +21,20 @@ import java.util.List;
 public class PrenotazioneDAO {
     private HibernateAnnotationUtil HibernateUtil;
 
-    public Prenotazione getPrenotazione(Prenotazione c) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            c = (Prenotazione) session.get(Prenotazione.class, c.getId());
+    public Prenotazione getPrenotazione(Long id) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+           return session.get(Prenotazione.class, id);
         } catch (HibernateException e) {
             return null;
-        } finally {
-            if (session != null)
-                session.close();
         }
-        return c;
     }
 
     public List<Prenotazione> getPrenotazioni() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Prenotazione> lp;
-        try {
-            lp = (List<Prenotazione>) session.createQuery("from Prenotazione").list();
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
+            return  (List<Prenotazione>) session.createQuery("from Prenotazione").list();
         } catch (HibernateException e) {
             return null;
-        } finally {
-            if (session != null)
-                session.close();
         }
-        return lp;
     }
 
    /* public List<Prenotazione> getPrenotazioniByUtente(Prenotazione utente) {
@@ -101,7 +90,7 @@ public class PrenotazioneDAO {
         return result;
     }
 
-    public List<Prenotazione> getFilteredPrenotazioniByData(Date dataSceltaI, Date dataSceltaF) {
+    public List<Prenotazione> getPrenotazioniByDates(Date dataSceltaI, Date dataSceltaF) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Prenotazione> cr = cb.createQuery(Prenotazione.class);
@@ -109,7 +98,7 @@ public class PrenotazioneDAO {
 
         Predicate[] predicates = new Predicate[2];
         predicates[0] = cb.greaterThan(root.<Date>get("dataInizio"), dataSceltaI);
-        predicates[1] = cb.lessThanOrEqualTo(root.<Date>get("dataInizio"), dataSceltaF);
+        predicates[1] = cb.lessThanOrEqualTo(root.<Date>get("dataFine"), dataSceltaF);
         cr.select(root).where(predicates);
 
         Query<Prenotazione> query = session.createQuery(cr);

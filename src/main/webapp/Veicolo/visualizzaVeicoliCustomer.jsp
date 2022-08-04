@@ -10,10 +10,6 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.auto_park.hibernate.entity.Veicolo" %>
 
-<%
-    List<Veicolo> listaVeicoli = (List<Veicolo>) request.getAttribute("lv");
-    request.setAttribute("listaveicoli", listaVeicoli);
-%>
 <html>
 <head>
     <title>Visualizza veicoli</title>
@@ -27,6 +23,7 @@
         <th>Modello</th>
         <th>Anno</th>
         <th>Tipologia veicolo</th>
+        <th>Prenota</th>
     </tr>
     <c:forEach var="ve" items="${listaveicoli}">
         <tr>
@@ -34,6 +31,7 @@
             <td>${ve.modello}</td>
             <td>${ve.annoImmatricolazione}</td>
             <td>${ve.tipo}</td>
+            <td>Prenota</td>
         </tr>
     </c:forEach>
 </table>

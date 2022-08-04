@@ -25,8 +25,6 @@ HttpSession session1 = request.getSession();
         request.setAttribute("utente", u);
     }
     request.setAttribute("show", show);
-
-
 %>
 <c:if test="${utente.tipo == 'superuser'}">
     <a href="PrenotazioneServlet?comando=visualizzaAllPrenotazioni">Lista prenotazioni</a>

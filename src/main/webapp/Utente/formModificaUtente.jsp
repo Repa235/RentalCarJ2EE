@@ -11,8 +11,9 @@
 <h1><%= "Form modifica utente" %>
 </h1>
 <br/>
-<form action="ModificaUtente" method="post">
+<form action="UtenteServlet" method="post">
     <input type="hidden" name="id" value="${utenteDaModificare.id}">
+    <input type="hidden" name="comando" value="modifica">
     Nome: <input type="text" name="nome" value="${utenteDaModificare.nome}">
     <br>
     Cognome: <input type="text" name="cognome" value="${utenteDaModificare.cognome}">

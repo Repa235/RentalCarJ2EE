@@ -19,7 +19,8 @@
 <body>
 <%@include file="../header.jsp"%>
 <h1> Modifica una prenotazione </h1>
-<form action="ModificaPrenotazione" method="post">
+<form action="PrenotazioneServlet" method="post">
+    <input type="hidden" name="comando" value="modificaPrenotazione">
     <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
     <br>
     Data inizio: <input name="dataInizio" type="date" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${requestScope.prenotazione.dataInizio}" />">

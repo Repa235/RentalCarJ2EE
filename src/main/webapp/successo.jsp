@@ -14,6 +14,6 @@
 <body>
 <%@include file="header.jsp"%>
 <h1>OPERAZIONE ESEGUITA CON SUCCESSO</h1>
-<a href="Homepage">TORNA ALLA HOME</a>
+<a href="UtenteServlet?comando=profiloUtente">TORNA ALLA HOME</a>
 </body>
 </html>

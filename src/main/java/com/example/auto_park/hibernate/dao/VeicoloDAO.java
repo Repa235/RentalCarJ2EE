@@ -1,6 +1,7 @@
 package com.example.auto_park.hibernate.dao;
 
 import com.example.auto_park.hibernate.entity.Prenotazione;
+import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Veicolo;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
@@ -17,17 +18,12 @@ import java.util.List;
 public class VeicoloDAO {
     private HibernateAnnotationUtil HibernateUtil;
 
-    public Veicolo getVeicolo(Veicolo c) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            c = (Veicolo) session.get(Veicolo.class, c.getId());
+    public Veicolo getVeicolo(Long id) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Veicolo.class, id);
         } catch (HibernateException e) {
             return null;
-        } finally {
-            if (session != null)
-                session.close();
         }
-        return c;
     }
 
     public List<Veicolo> getVeicoli() {

@@ -1,6 +1,7 @@
 package com.example.auto_park.servlet;
 
 import com.example.auto_park.hibernate.dao.VeicoloDAO;
+import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Veicolo;
 
 import javax.servlet.*;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @WebServlet(name = "VeicoloServlet", value = "/VeicoloServlet")
 public class VeicoloServlet extends HttpServlet {
-    VeicoloDAO vd = new VeicoloDAO();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,9 +35,10 @@ public class VeicoloServlet extends HttpServlet {
     }
 
     private void visualizzaVeicoli(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        VeicoloDAO vd = new VeicoloDAO();
         List<Veicolo> lv = vd.getVeicoli();
-        request.setAttribute("lv", lv);
-        request.getRequestDispatcher("Veicolo/visualizzaVeicoli.jsp").forward(request, response);
+        request.setAttribute("listaveicoli", lv);
+        request.getRequestDispatcher("Veicolo/visualizzaVeicoliCustomer.jsp").forward(request, response);
     }
 
     private void richiediAggiungiVeicolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,6 +70,7 @@ public class VeicoloServlet extends HttpServlet {
         String modello = request.getParameter("modello");
         String tipo = request.getParameter("tipo");
         Veicolo v = new Veicolo(casaCostruttrice, modello, annoImmatricolazione, tipo);
+        VeicoloDAO vd = new VeicoloDAO();
         vd.saveOrUpdateVeicolo(v);
         request.getRequestDispatcher("successo.jsp").forward(request, response);
     }

@@ -1,6 +1,6 @@
 package com.example.auto_park.hibernate.dao;
 
-import com.example.auto_park.hibernate.entity.Utente;
+import com.example.auto_park.hibernate.entity.*;
 import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
@@ -17,17 +17,12 @@ import java.util.List;
 public class UtenteDAO {
     private HibernateAnnotationUtil HibernateUtil;
 
-    public Utente getUtente(Utente c) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            c = (Utente) session.get(Utente.class, c.getId());
+    public Utente getUtente(Long id) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Utente.class, id);
         } catch (HibernateException e) {
             return null;
-        } finally {
-            if (session != null)
-                session.close();
         }
-        return c;
     }
 
     public boolean saveOrUpdateUtente(Utente c) {
@@ -71,32 +66,24 @@ public class UtenteDAO {
 
     public List<Utente> getCustomers() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Utente> lp;
-        try {
-            lp = (List<Utente>) session.createQuery("from Utente where tipo = 'customer'").list();
-        } catch (HibernateException e) {
-            return null;
-        } finally {
-            if (session != null)
-                session.close();
-        }
-        return lp;
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
+        Root<Utente> root = cr.from(Utente.class);
+        cr.select(root).where(cb.equal(root.get("tipo"), "customer"));
+        Query<Utente> query = session.createQuery(cr);
+        List<Utente> results = query.getResultList();
+        return results;
     }
 
-    public List<Utente> getUsersByUsername(Utente utente) {
+    public List<Utente> getUsersByUsername(String username) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Utente> lp;
-        try {
-            lp = (List<Utente>) session.createQuery("from Utente where username=:un")
-                    .setParameter("un",utente.getUsername())
-                    .list();
-        } catch (HibernateException e) {
-            return null;
-        } finally {
-            if (session != null)
-                session.close();
-        }
-        return lp;
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
+        Root<Utente> root = cr.from(Utente.class);
+        cr.select(root).where(cb.equal(root.get("username"), username));
+        Query<Utente> query = session.createQuery(cr);
+        List<Utente> results = query.getResultList();
+        return  results;
     }
 
     public List<Utente> getUtentiFiltratiByNome(String nome) {

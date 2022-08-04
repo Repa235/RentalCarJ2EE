@@ -14,15 +14,15 @@
 </head>
 <body>
 <%@include file="../header.jsp"%>
-<%
-    Utente ut = (Utente) request.getAttribute("customer");
-    request.setAttribute("utente", ut);
-%>
 <h1>Profilo customer</h1>
 <h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-<a href="VisualizzaVeicoliCustomer">Visualizza veicoli</a>
-<a href="RichiediPrenotaVeicolo">Prenota veicolo</a>
-<a href="formModificaUtente.jsp">Modifica profilo</a>
+<a href="VeicoloServlet?comando=visualizzaVeicoli">Visualizza veicoli</a>
+<a href="PrenotazioneServlet?comando=richiediPrenotazioneByDates">Prenota un veicolo</a>
+    <form action="UtenteServlet" method="post">
+        <input type="hidden" name="comando"  value="richiediModificaUtente">
+        <input type="hidden" name="id"  value="${utente.id}">
+        <input type="submit" value="Modifica i tuoi dati">
+    </form>
 <br>
 <table border="1">
     <tr>
@@ -38,15 +38,17 @@
             <td><fmt:formatDate pattern="dd-MM-yyyy" value="${prenotazione.dataFine}"/></td>
             <td>${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}</td>
             <td>
-                <form action="RichiediModificaPrenotazione" method="post">
+                <form action="PrenotazioneServlet" method="post">
                     <input type="hidden" name="id" value="${prenotazione.id}">
+                    <input type="hidden" name="comando" value="richiediModificaPrenotazione">
                     <input type="submit" value="Modifica">
                 </form>
             </td>
             </td>
             <td>
-                <form action="EliminaPrenotazione" method="post">
+                <form action="PrenotazioneServlet" method="post">
                     <input type="hidden" name="id" value="${prenotazione.id}">
+                    <input type="hidden" name="comando" value="eliminaPrenotazione">
                     <input type="submit" value="Elimina">
                 </form>
             </td>

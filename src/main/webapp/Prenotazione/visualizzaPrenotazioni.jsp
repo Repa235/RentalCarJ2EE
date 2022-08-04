@@ -26,6 +26,7 @@
         <th>Veicolo</th>
         <th>Approva</th>
     </tr>
+
     <c:forEach var="prenotazione" items="${listaprenotazioni}">
         <c:choose>
             <c:when test="${!prenotazione.approvato}">

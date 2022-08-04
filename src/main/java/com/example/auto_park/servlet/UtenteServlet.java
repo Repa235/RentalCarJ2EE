@@ -15,8 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "UtenteServlet", value = "/UtenteServlet")
 public class UtenteServlet extends HttpServlet {
-    Utente u = new Utente();
-    UtenteDAO ud = new UtenteDAO();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +42,8 @@ public class UtenteServlet extends HttpServlet {
 
     public void profiloSuper(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        u = (Utente) session.getAttribute("utente");
+        Utente u = (Utente) session.getAttribute("utente");
+        UtenteDAO ud = new UtenteDAO();
         List<Utente> clienti = ud.getCustomers();
         request.setAttribute("superUser", u);
         request.setAttribute("clienti", clienti);
@@ -51,26 +51,29 @@ public class UtenteServlet extends HttpServlet {
         request.getRequestDispatcher("Utente/profiloSuper.jsp").forward(request, response);
     }
 
-    public void richiediAggiungiUtente (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void richiediAggiungiUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("Utente/formAggiungiUtente.jsp").forward(request, response);
         System.out.println("AAAAA");
     }
 
     public void profiloCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        u = (Utente) session.getAttribute("utente");
-        request.setAttribute("customer", u);
+        Utente u = (Utente) session.getAttribute("utente");
+        request.setAttribute("utente", u);
         request.getRequestDispatcher("Utente/profiloCustomer.jsp").forward(request, response);
     }
 
     public void profiloUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        u = (Utente) session.getAttribute("utente");
-        if (u.getTipo() == "customer") {
+        Utente u = (Utente) session.getAttribute("utente");
+        System.out.println(u.getNome() + " " + u.getCognome() + " Tipo: " + u.getTipo());
+        if (u.getTipo().equals("customer")) {
             response.sendRedirect("UtenteServlet?comando=profiloC");
-        } else {
+        }
+        if (u.getTipo().equals("superuser")) {
             response.sendRedirect("UtenteServlet?comando=profiloS");
         }
+
     }
 
 
@@ -126,19 +129,27 @@ public class UtenteServlet extends HttpServlet {
         String tipo = "customer";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        u = new Utente(nome, cognome, dataNascita, tipo, username, password, null);
+        UtenteDAO ud = new UtenteDAO();
+        Utente u = new Utente(nome, cognome, dataNascita, tipo, username, password, null);
         ud.saveOrUpdateUtente(u);
         response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
 
     public void eliminaUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
-        u = ud.getUtente(new Utente(id));
-        ud.deleteUtente(u);
+        UtenteDAO ud = new UtenteDAO();
+        Utente uE = ud.getUtente(id);
+        try {
+            ud.deleteUtente(uE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Eliminazione fallita, l'utente potrebbe avere delle prenotazioni in sospeso");
+        }
         response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
 
     public void modificaUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UtenteDAO ud = new UtenteDAO();
         Long id = Long.parseLong(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
@@ -159,34 +170,35 @@ public class UtenteServlet extends HttpServlet {
     }
 
     public void richiedimodificaUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
         Long idCustomer = Long.parseLong(request.getParameter("id"));
-        u = (Utente) session.getAttribute("utente");
-        Utente uM = u;
+        UtenteDAO ud = new UtenteDAO();
+        Utente uM = ud.getUtente(idCustomer);
         request.setAttribute("utenteDaModificare", uM);
-        request.setAttribute("utente", u);
         request.getRequestDispatcher("Utente/formModificaUtente.jsp").forward(request, response);
     }
 
     public void richiedimodificaUtenteBySuperUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long idCustomer = Long.parseLong(request.getParameter("id"));
-        Utente uM = ud.getUtente(new Utente(idCustomer));
+        UtenteDAO ud = new UtenteDAO();
+        Utente uM = ud.getUtente(idCustomer);
         request.setAttribute("utenteDaModificare", uM);
         request.getRequestDispatcher("Utente/formModificaUtente.jsp").forward(request, response);
     }
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Utente u = new Utente();
+        UtenteDAO ud = new UtenteDAO();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         List<Utente> sameUsername = new ArrayList<Utente>();
-        u.setUsername(username);
-        sameUsername = ud.getUsersByUsername(u);
+        sameUsername = ud.getUsersByUsername(username);
         for (Utente u1 : sameUsername) {
             if (u1.getPassword().equals(password)) {
                 u = u1;
             }
         }
+        System.out.println("Utente trovato " + u.getNome());
         session.setAttribute("utente", u);
         if (u.getTipo().equals("customer")) {
             response.sendRedirect("UtenteServlet?comando=profiloC");
@@ -196,17 +208,18 @@ public class UtenteServlet extends HttpServlet {
     }
 
     public void filtraUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UtenteDAO ud = new UtenteDAO();
         String filtraPer = request.getParameter("filtraPer");
         String text = request.getParameter("text");
         List<Utente> filtered = new ArrayList<>();
         switch (filtraPer) {
             case "Nome":
-                filtered=ud.getUtentiFiltratiByNome(text);
+                filtered = ud.getUtentiFiltratiByNome(text);
                 request.setAttribute("clienti", filtered);
                 request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
                 break;
             case "Cognome":
-                filtered=ud.getUtentiFiltratiByCognome(text);
+                filtered = ud.getUtentiFiltratiByCognome(text);
                 System.out.println(filtered.toString());
                 request.setAttribute("clienti", filtered);
                 request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
