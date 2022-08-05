@@ -16,8 +16,17 @@
 <%@include file="../header.jsp"%>
 <h1>Profilo customer</h1>
 <h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-<a href="VeicoloServlet?comando=visualizzaVeicoli">Visualizza veicoli</a>
-<a href="PrenotazioneServlet?comando=richiediPrenotazioneByDates">Prenota un veicolo</a>
+
+<c:url var="visualizzaVeicoli" value="VeicoloServlet">
+    <c:param name="comando" value="visualizzaVeicoli"/>
+</c:url>
+<a href="${visualizzaVeicoli}">Visualizza veicoli</a>
+
+<c:url var="richiediPrenotazioneByDates" value="PrenotazioneServlet">
+    <c:param name="comando" value="richiediPrenotazioneByDates"/>
+</c:url>
+<a href="${richiediPrenotazioneByDates}">Prenota un veicolo</a>
+
     <form action="UtenteServlet" method="post">
         <input type="hidden" name="comando"  value="richiediModificaUtente">
         <input type="hidden" name="id"  value="${utente.id}">
@@ -34,8 +43,8 @@
     </tr>
     <c:forEach var="prenotazione" items="${utente.prenotazioni}">
         <tr>
-            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${prenotazione.dataInizio}"/></td>
-            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${prenotazione.dataFine}"/></td>
+            <td>${prenotazione.dataInizio}</td>
+            <td>${prenotazione.dataFine}</td>
             <td>${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}</td>
             <td>
                 <form action="PrenotazioneServlet" method="post">
@@ -54,6 +63,7 @@
             </td>
         </tr>
     </c:forEach>
+
 </table>
 </body>
 </html>

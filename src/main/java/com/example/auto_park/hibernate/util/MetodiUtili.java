@@ -8,28 +8,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+
 import java.util.concurrent.TimeUnit;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class MetodiUtili {
 
-    public static Date stringToDate(String s){
-        Date res = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            res = sdf.parse(s);
-        } catch (Exception e) {
-            System.out.println("Impossibile prelevare la data");
-        }
-        return res;
-    }
+    //Inserire metodi static
 
-    public static int getGiorniDiDifferenza(Date precedente, Date successivo) {
-        long diff = Math.abs(successivo.getTime() - precedente.getTime());
-        return (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-    }
 
-    public static LocalDateTime dateToLocalDate (Date d){
-        return d.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
+
 }

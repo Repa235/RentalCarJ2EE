@@ -10,18 +10,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Prova {
 
 
-
-
-
     public static void main(String[] args) {
+        LocalDate today = LocalDate.now();
 
-
+        System.out.println(today);
     }
 }

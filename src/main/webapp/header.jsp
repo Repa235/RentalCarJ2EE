@@ -13,7 +13,9 @@
     <title>Header</title>
 </head>
 <body>
-<a href="Homepage"> Homepage </a>
+
+<c:url var="Homepage" value="Homepage" />
+<a href="${Homepage}"> Homepage </a>
 <a href="#"> Parco auto </a>
 
 <%
@@ -27,11 +29,24 @@ HttpSession session1 = request.getSession();
     request.setAttribute("show", show);
 %>
 <c:if test="${utente.tipo == 'superuser'}">
-    <a href="PrenotazioneServlet?comando=visualizzaAllPrenotazioni">Lista prenotazioni</a>
+
+    <c:url var="visualizzaAllPrenotazioni" value="PrenotazioneServlet">
+        <c:param name="comando" value="visualizzaAllPrenotazioni"/>
+    </c:url>
+    <a href="${visualizzaAllPrenotazioni}">Lista prenotazioni</a>
+
 </c:if>
 <c:if test="${show}">
-    <a href="UtenteServlet?comando=profiloUtente"> Profilo utente </a>
-    <a href="UtenteServlet?comando=logout"> Logout </a>
+
+    <c:url var="profiloUtente" value="UtenteServlet">
+        <c:param name="comando" value="profiloUtente"/>
+    </c:url>
+    <a href="${profiloUtente}"> Profilo utente </a>
+
+    <c:url var="logout" value="UtenteServlet">
+        <c:param name="comando" value="logout"/>
+    </c:url>
+    <a href="${logout}"> Logout </a>
 </c:if>
 
 </body>

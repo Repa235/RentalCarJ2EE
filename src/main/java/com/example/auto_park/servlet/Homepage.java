@@ -17,7 +17,6 @@ public class Homepage extends HttpServlet {
         if(u!=null) {
             showForm = false;
         }
-        System.out.println("Showform: " + showForm);
         request.setAttribute("utente", u);
         request.setAttribute("showForm", showForm);
         request.getRequestDispatcher("index.jsp").forward(request,response);

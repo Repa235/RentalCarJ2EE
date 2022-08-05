@@ -2,7 +2,8 @@ package com.example.auto_park.hibernate.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -23,15 +24,15 @@ public class Prenotazione implements Serializable {
     private Veicolo veicolo;
 
     @Column(name = "dataInizio")
-    private Date dataInizio;
+    private LocalDate dataInizio;
 
     @Column(name = "dataFine")
-    private Date dataFine;
+    private LocalDate dataFine;
 
     @Column(name = "isApprovato")
     private boolean isApprovato;
 
-    public Prenotazione(Long id, Utente utente, Veicolo veicolo, Date dataInizio, Date dataFine, boolean isApprovato) {
+    public Prenotazione(Long id, Utente utente, Veicolo veicolo, LocalDate dataInizio, LocalDate dataFine, boolean isApprovato) {
         this.id = id;
         this.utente = utente;
         this.veicolo = veicolo;
@@ -40,7 +41,7 @@ public class Prenotazione implements Serializable {
         this.isApprovato = isApprovato;
     }
 
-    public Prenotazione(Utente utente, Veicolo veicolo, Date dataInizio, Date dataFine, boolean isApprovato) {
+    public Prenotazione(Utente utente, Veicolo veicolo, LocalDate dataInizio, LocalDate dataFine, boolean isApprovato) {
         this.utente = utente;
         this.veicolo = veicolo;
         this.dataInizio = dataInizio;
@@ -79,19 +80,19 @@ public class Prenotazione implements Serializable {
         this.veicolo = veicolo;
     }
 
-    public Date getDataInizio() {
+    public LocalDate getDataInizio() {
         return dataInizio;
     }
 
-    public void setDataInizio(Date dataInizio) {
+    public void setDataInizio(LocalDate dataInizio) {
         this.dataInizio = dataInizio;
     }
 
-    public Date getDataFine() {
+    public LocalDate getDataFine() {
         return dataFine;
     }
 
-    public void setDataFine(Date dataFine) {
+    public void setDataFine(LocalDate dataFine) {
         this.dataFine = dataFine;
     }
 

@@ -18,7 +18,7 @@
     <br>
     Cognome: <input type="text" name="cognome" value="${utenteDaModificare.cognome}">
     <br>
-    Data di nascita: <input type="date" name="dataNascita" value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${utenteDaModificare.dataNascita}" />">
+    Data di nascita: <input type="date" name="dataNascita" value="${utenteDaModificare.dataNascita}">
     <br>
     Username: <input type="text" name="username" value="${utenteDaModificare.username}">
     <br>

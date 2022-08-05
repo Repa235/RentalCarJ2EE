@@ -19,10 +19,24 @@
 
 <h1>Profilo superuser</h1>
 <h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-<a href="VeicoloServlet?comando=richiediAggiungiVeicolo">Aggiungi veicolo</a>
-<a href="UtenteServlet?comando=richiediAggiungiUtente">Inserisci customer</a>
-<a href="PrenotazioneServlet?comando=visualizzaAllPrenotazioni">Lista prenotazioni</a>
+
+<c:url var="richiediAggiungiVeicolo" value="VeicoloServlet">
+    <c:param name="comando" value="richiediAggiungiVeicolo"/>
+</c:url>
+<a href="${richiediAggiungiVeicolo}">Aggiungi veicolo</a>
+
+<c:url var="richiediAggiungiUtente" value="UtenteServlet">
+    <c:param name="comando" value="richiediAggiungiUtente"/>
+</c:url>
+<a href="${richiediAggiungiUtente}">Inserisci customer</a>
+
+<c:url var="visualizzaAllPrenotazioni" value="PrenotazioneServlet">
+    <c:param name="comando" value="visualizzaAllPrenotazioni"/>
+</c:url>
+<a href="${visualizzaAllPrenotazioni}">Lista prenotazioni</a>
+
 <br>
+
 <form action="UtenteServlet" method="post">
     <input type="hidden" name="comando" value="filtraUtenti">
     Filtra per:<select name="filtraPer">
@@ -46,7 +60,7 @@
         <tr>
             <td>${cliente.nome}</td>
             <td>${cliente.cognome}</td>
-            <td><fmt:formatDate pattern="dd-MM-yyyy" value="${cliente.dataNascita}"/></td>
+            <td>${cliente.dataNascita}</td>
             <td>
                 <form action="PrenotazioneServlet" method="post">
                     <input type="hidden" name="comando" value="visualizzaPrenotazioni">

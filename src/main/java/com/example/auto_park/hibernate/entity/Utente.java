@@ -2,7 +2,8 @@ package com.example.auto_park.hibernate.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -24,7 +25,7 @@ public class Utente implements Serializable {
     private String cognome;
 
     @Column(name = "dataNascita")
-    private Date dataNascita;
+    private LocalDate dataNascita;
 
     @Column(name = "tipo")
     private String tipo;
@@ -45,7 +46,7 @@ public class Utente implements Serializable {
         this.id = id;
     }
 
-    public Utente(Long id, String nome, String cognome, Date dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
+    public Utente(Long id, String nome, String cognome, LocalDate dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -56,7 +57,7 @@ public class Utente implements Serializable {
         this.prenotazioni = prenotazioni;
     }
 
-    public Utente(String nome, String cognome, Date dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
+    public Utente(String nome, String cognome, LocalDate dataNascita, String tipo, String username, String password, Set<Prenotazione> prenotazioni) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
@@ -92,11 +93,11 @@ public class Utente implements Serializable {
         this.cognome = cognome;
     }
 
-    public Date getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
 
