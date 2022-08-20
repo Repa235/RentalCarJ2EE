@@ -35,7 +35,7 @@
                 <tr>
                     <td>${cliente.nome}</td>
                     <td>${cliente.cognome}</td>
-                    <td><fmt:formatDate pattern="dd-MM-yyyy" value="${cliente.dataNascita}"/></td>
+                    <td>${cliente.dataNascita}</td>
                     <td>
                         <form action="VisualizzaPrenotazioni" method="post">
                             <input type="hidden" name="id" value="${cliente.id}">

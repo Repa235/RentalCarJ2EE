@@ -23,7 +23,6 @@
         <th>Modello</th>
         <th>Anno</th>
         <th>Tipologia veicolo</th>
-        <th>Prenota</th>
     </tr>
     <c:forEach var="ve" items="${listaveicoli}">
         <tr>
@@ -31,7 +30,6 @@
             <td>${ve.modello}</td>
             <td>${ve.annoImmatricolazione}</td>
             <td>${ve.tipo}</td>
-            <td>Prenota</td>
         </tr>
     </c:forEach>
 </table>

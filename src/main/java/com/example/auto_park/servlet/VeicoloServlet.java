@@ -29,11 +29,23 @@ public class VeicoloServlet extends HttpServlet {
             case "richiediAggiungiVeicolo":
                 richiediAggiungiVeicolo(request, response);
                 break;
-            case "":
-                // code block
+            default:
+                response.sendRedirect("Homepage");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String comando = request.getParameter("comando");
+
+
+        switch (comando) {
+            case "aggiungiVeicolo":
+                aggiungiVeicolo(request, response);
                 break;
             default:
-                // code block
+                response.sendRedirect("Homepage");
         }
     }
 
@@ -47,24 +59,6 @@ public class VeicoloServlet extends HttpServlet {
         request.getRequestDispatcher("Veicolo/formAggiungiVeicolo.jsp").forward(request, response);
     }
 
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String comando = request.getParameter("comando");
-
-
-        switch (comando) {
-            case "aggiungiVeicolo":
-                aggiungiVeicolo(request, response);
-                break;
-            case "":
-                // code block
-                break;
-            default:
-                // code block
-        }
-    }
 
     private void aggiungiVeicolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int annoImmatricolazione = Integer.parseInt(request.getParameter("annoImmatricolazione"));

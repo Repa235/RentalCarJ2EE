@@ -24,7 +24,7 @@
         <th>Data fine</th>
         <th>Richiedente</th>
         <th>Veicolo</th>
-        <th>Approva</th>
+        <th>Approva o elimina</th>
     </tr>
 
     <c:forEach var="prenotazione" items="${listaprenotazioni}">
@@ -32,8 +32,8 @@
             <c:when test="${!prenotazione.approvato}">
         <tr>
 
-            <td><fmt:formatDate pattern = "dd-MM-yyyy" value = "${prenotazione.dataInizio}" /></td>
-            <td><fmt:formatDate pattern = "dd-MM-yyyy" value = "${prenotazione.dataFine}" /></td>
+            <td>${prenotazione.dataInizio}</td>
+            <td>${prenotazione.dataFine}</td>
             <td>${prenotazione.utente.nome} ${prenotazione.utente.cognome}</td>
             <td>${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}</td>
             <td>
@@ -42,7 +42,8 @@
                     <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
                     <select name="approva">
                         <option value="true">Si</option>
-                        <option value="false">No (elimina)</option>
+                        <option value="false">No</option>
+                        <option value="delete">Elimina</option>
                     </select>
                     <input type="submit" value="vai">
                 </form>

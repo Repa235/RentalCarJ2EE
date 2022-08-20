@@ -16,7 +16,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class MetodiUtili {
 
     //Inserire metodi static
-
-
-
+    public static void errore (String errore,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("errore",errore);
+        request.getRequestDispatcher("errore.jsp").forward(request, response);
+    }
 }

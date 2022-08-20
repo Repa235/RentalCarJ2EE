@@ -12,6 +12,8 @@ import java.time.LocalDate;
 
 import java.util.List;
 
+import static com.example.auto_park.hibernate.util.MetodiUtili.errore;
+
 @WebServlet(name = "UtenteServlet", value = "/UtenteServlet")
 public class UtenteServlet extends HttpServlet {
 
@@ -39,7 +41,7 @@ public class UtenteServlet extends HttpServlet {
                 logout(request, response);
                 break;
             default:
-                response.sendRedirect("Homepage");
+                errore("Si è verificato un errore", request,response);;
         }
     }
 
@@ -69,8 +71,7 @@ public class UtenteServlet extends HttpServlet {
                 richiedimodificaUtenteBySuperUser(request, response);
                 break;
             default:
-                response.sendRedirect("Homepage");
-
+                errore("Si è verificato un errore", request,response);
         }
 
     }
@@ -81,8 +82,7 @@ public class UtenteServlet extends HttpServlet {
         Long idSuper = ((Utente) session.getAttribute("utente")).getId();
         List<Utente> clienti = ud.getCustomers();
         Utente u = ud.getUtente(idSuper);
-        //request.setAttribute("superUser", u);
-        session.setAttribute("superUser",u);
+        session.setAttribute("superUser", u);
         request.setAttribute("clienti", clienti);
         request.getRequestDispatcher("Utente/profiloSuper.jsp").forward(request, response);
     }
@@ -95,7 +95,9 @@ public class UtenteServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Long idCustomer = ((Utente) session.getAttribute("utente")).getId();
         Utente utente = ud.getUtente(idCustomer);
-        session.setAttribute("utente",utente);
+        LocalDate now = LocalDate.now();
+        session.setAttribute("utente", utente);
+        request.setAttribute("now", now);
         request.getRequestDispatcher("Utente/profiloCustomer.jsp").forward(request, response);
     }
 
@@ -132,14 +134,14 @@ public class UtenteServlet extends HttpServlet {
         response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
 
-    public void eliminaUtente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void eliminaUtente(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Long id = Long.parseLong(request.getParameter("id"));
         Utente uE = ud.getUtente(id);
         try {
             ud.deleteUtente(uE);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Eliminazione fallita, l'utente potrebbe avere delle prenotazioni in sospeso");
+            errore("Eliminazione fallita, l'utente selezionato potrebbe avere delle prenotazioni in sospeso", request, response);
         }
         response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
@@ -206,7 +208,7 @@ public class UtenteServlet extends HttpServlet {
                 request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
                 break;
             default:
-                System.out.println("Nessun parametro selezionato");
+                errore("Nessun parametro selezionato", request, response);
         }
     }
 

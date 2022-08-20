@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 
+import static com.example.auto_park.hibernate.util.MetodiUtili.errore;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @WebServlet(name = "PrenotazioneServlet", value = "/PrenotazioneServlet")
@@ -35,7 +36,6 @@ public class PrenotazioneServlet extends HttpServlet {
             case "richiediPrenotazioneByDates":
                 richiediPrenotazioneByDates(request, response);
                 break;
-
             case "visualizzaAllPrenotazioni":
                 visualizzaAllPrenotazioni(request, response);
                 break;
@@ -45,12 +45,9 @@ public class PrenotazioneServlet extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String comando = request.getParameter("comando");
-
 
         switch (comando) {
             case "approvaPrenotazione":
@@ -78,18 +75,20 @@ public class PrenotazioneServlet extends HttpServlet {
                 eliminaPrenotazione(request, response);
                 break;
             default:
-                // code block
+                System.out.println("Operazione non selezionata");
         }
     }
 
     //I metodi POST da qua in poi
     private void approvaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean approvated = Boolean.parseBoolean(request.getParameter("approva"));
+        String approvated = request.getParameter("approva");
         PrenotazioneDAO pd = new PrenotazioneDAO();
         Prenotazione p = pd.getPrenotazione(Long.parseLong(request.getParameter("idPrenotazione")));
-        if (approvated) {
+        if (approvated.equals("true")) {
             p.setApprovato(true);
             pd.saveOrUpdatePrenotazione(p);
+            response.sendRedirect("UtenteServlet?comando=profiloUtente");
+        } else if(approvated.equals("false")) {
             response.sendRedirect("UtenteServlet?comando=profiloUtente");
         } else {
             pd.deletePrenotazione(p);
@@ -97,7 +96,7 @@ public class PrenotazioneServlet extends HttpServlet {
         }
     }
 
-    private void eliminaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void eliminaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Prenotazione p = pd.getPrenotazione(Long.parseLong(request.getParameter("id")));
         LocalDate oggi = LocalDate.now();
         LocalDate dataPrenotazione = p.getDataInizio();
@@ -106,11 +105,12 @@ public class PrenotazioneServlet extends HttpServlet {
             response.sendRedirect("UtenteServlet?comando=profiloUtente");
         } else {
             System.out.println("Mancano meno di due giorni alla data della prenotazione");
-            response.sendRedirect("UtenteServlet?comando=profiloUtente");
+            errore("Mancano meno di due giorni alla data della prenotazione",request,response);
         }
     }
 
     private void modificaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Prenotazione p = pd.getPrenotazione(Long.parseLong(request.getParameter("idPrenotazione")));
         String dataInizioString = request.getParameter("dataInizio");
         String dataFineString = request.getParameter("dataFine");
         Veicolo veicolo = vd.getVeicolo(Long.parseLong(request.getParameter("veicolo")));
@@ -118,7 +118,7 @@ public class PrenotazioneServlet extends HttpServlet {
         LocalDate dataFine = LocalDate.parse(dataFineString);
         if (dataFine.isAfter(dataInizio)) {
             PrenotazioneDAO pd = new PrenotazioneDAO();
-            Prenotazione p = pd.getPrenotazione(Long.parseLong(request.getParameter("idPrenotazione")));
+
             p.setDataInizio(dataInizio);
             p.setDataFine(dataFine);
             p.setVeicolo(veicolo);
@@ -180,9 +180,13 @@ public class PrenotazioneServlet extends HttpServlet {
             request.setAttribute("prenotazione", p);
             request.setAttribute("veicoli", veicoli);
             request.getRequestDispatcher("Prenotazione/formModificaPrenotazione.jsp").forward(request, response);
-        } else {
-            System.out.println("Mancano meno di due giorni alla data della prenotazione");
-            response.sendRedirect("UtenteServlet?comando=profiloUtente");
+        }
+        else if (DAYS.between(oggi, dataPrenotazione)<=0) {
+            errore("Il periodo di prenotazione del veicolo è già trascorso",request,response);
+        }
+        else {
+            //System.out.println("Mancano meno di due giorni alla data della prenotazione");
+            errore("Mancano meno di due giorni alla data della prenotazione",request,response);
         }
     }
 
