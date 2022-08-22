@@ -2,14 +2,17 @@ package com.example.auto_park.servlet;
 
 
 import com.example.auto_park.hibernate.dao.VeicoloDAO;
-
 import com.example.auto_park.hibernate.entity.Veicolo;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import static com.example.auto_park.hibernate.util.MetodiUtili.errore;
 
 @WebServlet(name = "VeicoloServlet", value = "/VeicoloServlet")
 public class VeicoloServlet extends HttpServlet {
@@ -30,7 +33,7 @@ public class VeicoloServlet extends HttpServlet {
                 richiediAggiungiVeicolo(request, response);
                 break;
             default:
-                response.sendRedirect("Homepage");
+                errore("Operazione non selezionata", request,response);
         }
     }
 
@@ -45,7 +48,7 @@ public class VeicoloServlet extends HttpServlet {
                 aggiungiVeicolo(request, response);
                 break;
             default:
-                response.sendRedirect("Homepage");
+                errore("Operazione non selezionata", request,response);
         }
     }
 

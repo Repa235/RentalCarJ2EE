@@ -7,17 +7,16 @@ import com.example.auto_park.hibernate.entity.Prenotazione;
 import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Veicolo;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
-
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 
 import static com.example.auto_park.hibernate.util.MetodiUtili.errore;
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -41,7 +40,7 @@ public class PrenotazioneServlet extends HttpServlet {
                 visualizzaAllPrenotazioni(request, response);
                 break;
             default:
-                System.out.println("Operazione non selezionata");
+                errore("Operazione non selezionata", request,response);
 
         }
     }
@@ -76,11 +75,10 @@ public class PrenotazioneServlet extends HttpServlet {
                 eliminaPrenotazione(request, response);
                 break;
             default:
-                System.out.println("Operazione non selezionata");
+                errore("Operazione non selezionata", request,response);
         }
     }
 
-    //I metodi POST da qua in poi
     private void approvaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String approvated = request.getParameter("approva");
         PrenotazioneDAO pd = new PrenotazioneDAO();
@@ -191,7 +189,6 @@ public class PrenotazioneServlet extends HttpServlet {
             errore("Il periodo di prenotazione del veicolo è già trascorso",request,response);
         }
         else {
-            //System.out.println("Mancano meno di due giorni alla data della prenotazione");
             errore("Mancano meno di due giorni alla data della prenotazione",request,response);
         }
     }
@@ -216,9 +213,7 @@ public class PrenotazioneServlet extends HttpServlet {
         LocalDate dataInizio = LocalDate.parse(dataInizioString);
         LocalDate dataFine = LocalDate.parse(dataFineString);
         PrenotazioneDAO pd = new PrenotazioneDAO();
-        //List<Prenotazione> prenotazioniByDates = pd.getPrenotazioniByDates(dataInizio, dataFine);
         VeicoloDAO vd = new VeicoloDAO();
-        //prelevo la lista di tutti i veicoli e poi rimuovo quelli prenotati
         List<Veicolo> veicoliDisponibili = vd.getVeicoliLiberiNelRange(dataInizio,dataFine);
 
         request.setAttribute("dataInizio", dataInizioString);

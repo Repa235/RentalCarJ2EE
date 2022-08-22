@@ -14,30 +14,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HibernateAnnotationUtil {
-
     private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
-
     /**
      * Utility class
      */
-    private HibernateAnnotationUtil() {
-    }
-
+    private HibernateAnnotationUtil() {}
     public static SessionFactory getSessionFactory() {
         return SESSION_FACTORY;
     }
-
     private static SessionFactory buildSessionFactory() {
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(dbSettings())
                 .build();
-
         Metadata metadata = new MetadataSources(serviceRegistry)
                 .addAnnotatedClass(Prenotazione.class)
                 .addAnnotatedClass(Utente.class)
                 .addAnnotatedClass(Veicolo.class)
                 .buildMetadata();
-
         return metadata.buildSessionFactory();
     }
 

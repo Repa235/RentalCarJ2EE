@@ -1,7 +1,4 @@
 package com.example.auto_park.hibernate.dao;
-
-import com.example.auto_park.hibernate.entity.*;
-import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.entity.Utente;
 import com.example.auto_park.hibernate.util.HibernateAnnotationUtil;
 import org.hibernate.HibernateException;
@@ -17,7 +14,6 @@ import java.util.List;
 
 public class UtenteDAO {
     private HibernateAnnotationUtil HibernateUtil;
-
     public Utente getUtente(Long id) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.get(Utente.class, id);
@@ -33,7 +29,6 @@ public class UtenteDAO {
         try {
             transaction = session.beginTransaction();
             session.saveOrUpdate(c);
-            ;
             transaction.commit();
             result = true;
         } catch (Exception e) {
@@ -114,6 +109,4 @@ public class UtenteDAO {
         List<Utente> results = query.getResultList();
         return  results;
     }
-
-
 }

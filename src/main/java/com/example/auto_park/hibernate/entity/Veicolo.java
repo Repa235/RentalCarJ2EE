@@ -1,11 +1,10 @@
 package com.example.auto_park.hibernate.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 @Entity
 @Table(name = "veicolo")
 public class Veicolo implements Serializable {

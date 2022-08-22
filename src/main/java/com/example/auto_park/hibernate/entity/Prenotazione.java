@@ -1,8 +1,7 @@
 package com.example.auto_park.hibernate.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 

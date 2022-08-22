@@ -7,7 +7,6 @@
 </head>
 <body>
 <%@include file="../header.jsp"%>
-<%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
 <h1><%= "Form modifica utente" %>
 </h1>
 <br/>

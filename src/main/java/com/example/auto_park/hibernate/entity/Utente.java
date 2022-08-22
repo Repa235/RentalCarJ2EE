@@ -1,8 +1,7 @@
 package com.example.auto_park.hibernate.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -12,7 +11,7 @@ import java.util.Set;
 @Table(name = "utente")
 public class Utente implements Serializable {
 
-    //Id dell'utente
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
