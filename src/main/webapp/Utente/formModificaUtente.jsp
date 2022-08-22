@@ -14,17 +14,22 @@
 <form action="UtenteServlet" method="post">
     <input type="hidden" name="id" value="${utenteDaModificare.id}">
     <input type="hidden" name="comando" value="modifica">
-    Nome: <input type="text" name="nome" value="${utenteDaModificare.nome}">
-    <br>
-    Cognome: <input type="text" name="cognome" value="${utenteDaModificare.cognome}">
-    <br>
-    Data di nascita: <input type="date" name="dataNascita" value="${utenteDaModificare.dataNascita}">
-    <br>
-    Username: <input type="text" name="username" value="${utenteDaModificare.username}">
-    <br>
-    Password: <input type="password" name="password" value="${utenteDaModificare.password}">
-    <br>
-    <input type="submit" name="Modifica">
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">Nome</span>
+        <input  class="form-control"  type="text" name="nome" value="${utenteDaModificare.nome}">
+        <span class="input-group-text" id="addon-wrapping">Cognome</span>
+        <input  class="form-control"  type="text" name="cognome" value="${utenteDaModificare.cognome}">
+        <span class="input-group-text" id="addon-wrapping">Data di nascita</span>
+        <input class="form-control"  type="date" name="dataNascita" value="${utenteDaModificare.dataNascita}">
+    </div>
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">Username</span>
+        <input class="form-control" type="text" name="username" value="${utenteDaModificare.username}">
+        <span class="input-group-text" id="addon-wrapping">Password</span>
+        <input class="form-control" type="password" name="password" value="${utenteDaModificare.password}">
+        <input type="submit" name="Modifica" value="Modifica">
+    </div>
+
 </form>
 </body>
 </html>

@@ -18,7 +18,7 @@
 <body>
 <%@include file="../header.jsp" %>
 <h2>Lista delle prenotazioni da gestire</h2>
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>Data inizio</th>
         <th>Data fine</th>

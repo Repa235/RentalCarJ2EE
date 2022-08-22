@@ -5,23 +5,27 @@
     <title>Aggiungi utente</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <h1><%= "Form registrazione utente" %>
 </h1>
 <br/>
-<form action="UtenteServlet" method="post">
-    <input type="hidden" name="comando" value="aggiungi">
-    Nome: <input type="text" name="nome">
-    <br>
-    Cognome: <input type="text" name="cognome">
-    <br>
-    Data di nascita: <input type="date" name="dataNascita">
-    <br>
-    Username: <input type="text" name="username">
-    <br>
-    Password: <input type="password" name="password">
-    <br>
-    <input type="submit" name="Registra">
+<form action="UtenteServlet" method="post" style="width: 700px">
+    <div class="input-group flex-nowrap">
+        <input type="hidden" name="comando" value="aggiungi">
+        <span class="input-group-text" id="addon-wrapping">Nome</span>
+        <input  class="form-control"  type="text" name="nome">
+        <span class="input-group-text" id="addon-wrapping">Cogome</span>
+        <input  class="form-control"  type="text" name="cognome">
+        <span class="input-group-text" id="addon-wrapping">Data di nascita</span>
+        <input class="form-control"  type="date" name="dataNascita">
+    </div>
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">Username</span>
+        <input class="form-control" type="text" name="username">
+        <span class="input-group-text" id="addon-wrapping">Password</span>
+        <input class="form-control" type="password" name="password">
+        <input  type="submit" name="Registra" value="Registra">
+    </div>
 </form>
 </body>
 </html>

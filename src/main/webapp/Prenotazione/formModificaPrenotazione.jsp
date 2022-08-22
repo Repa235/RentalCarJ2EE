@@ -17,22 +17,25 @@
 <body>
 <%@include file="../header.jsp"%>
 <h1> Modifica una prenotazione </h1>
-<form action="PrenotazioneServlet" method="post">
-    <input type="hidden" name="comando" value="modificaPrenotazione">
-    <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
-    <br>
-    Data inizio: <input name="dataInizio" type="date" value="${requestScope.prenotazione.dataInizio}">
-    <br>
-    Data fine: <input name="dataFine" type="date" value="${requestScope.prenotazione.dataFine}">
-    <br>
-    Veicolo:
-    <select name="veicolo" >
-    <c:forEach var="v" items="${veicoli}" >
-        <option value="${v.id}" selected="${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}">${v.casaCostruttrice} ${v.modello}</option>
-    </c:forEach>
-    </select>
-    <br>
-    <input type="submit" value="Modifica prenotazione">
+
+<form action="PrenotazioneServlet" method="post" style="width: 700px">
+    <div class="input-group flex-nowrap">
+        <input type="hidden" name="comando" value="modificaPrenotazione">
+        <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
+        <span class="input-group-text" id="addon-wrapping">Data inizio</span>
+        <input class="form-control" name="dataInizio" type="date" value="${requestScope.prenotazione.dataInizio}">
+        <span class="input-group-text">Data fine</span>
+        <input class="form-control" name="dataFine" type="date" value="${requestScope.prenotazione.dataFine}">
+    </div>
+    <div class="input-group flex-nowrap" >
+        <span class="input-group-text">Veicolo</span>
+        <select class="form-control" name="veicolo" >
+            <c:forEach var="v" items="${veicoli}" >
+                <option value="${v.id}" selected="${prenotazione.veicolo.casaCostruttrice} ${prenotazione.veicolo.modello}">${v.casaCostruttrice} ${v.modello}</option>
+            </c:forEach>
+        </select>
+        <input type="submit" value="Modifica prenotazione">
+    </div>
 </form>
 
 </body>

@@ -21,7 +21,7 @@
 <body>
 <%@include file="../header.jsp" %>
 <h2>Lista dei veicoli</h2>
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>Casa costruttrice</th>
         <th>Modello</th>

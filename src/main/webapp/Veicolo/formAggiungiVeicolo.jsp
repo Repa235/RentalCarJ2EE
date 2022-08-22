@@ -11,24 +11,29 @@
     <title>Aggingi veicolo</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <h1>Aggiungi un'auto</h1>
 <form action="VeicoloServlet" method="post">
     <input type="hidden" name="comando" value="aggiungiVeicolo">
-    Anno di immatricolazione: <input name="annoImmatricolazione" type="number" min="1950">
-    <br>
-    Casa costruttrice: <input name="casaCostruttrice" type="text">
-    <br>
-    Modello: <input name="modello" type="text">
-    <br>
-    Tipo: <select name="tipo">
-    <option value="minivan">minivan</option>
-    <option value="furgone">furgone</option>
-    <option value="suv">suv</option>
-    <option value="berlina">berlina</option>
-</select>
-    <br>
-    <input type="submit" value="Aggiungi">
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">Anno di immatricolazione</span>
+        <input class="form-control" name="annoImmatricolazione" type="number" min="1950">
+        <span class="input-group-text" id="addon-wrapping">Casa costruttrice</span>
+        <input class="form-control" name="casaCostruttrice" type="text">
+    </div>
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">Modello</span>
+        <input class="form-control" name="modello" type="text">
+        <span class="input-group-text" id="addon-wrapping">Tipo</span>
+        <select class="form-control" name="tipo">
+            <option value="minivan">minivan</option>
+            <option value="furgone">furgone</option>
+            <option value="suv">suv</option>
+            <option value="berlina">berlina</option>
+        </select>
+        <br>
+        <input type="submit" value="Aggiungi">
+    </div>
 </form>
 
 </body>

@@ -14,40 +14,54 @@
 </head>
 <body>
 <%@include file="../header.jsp" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.example.auto_park.hibernate.entity.Utente" %>
-
-<h1>Profilo superuser</h1>
-<h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
-
-<c:url var="richiediAggiungiVeicolo" value="VeicoloServlet">
-    <c:param name="comando" value="richiediAggiungiVeicolo"/>
-</c:url>
-<a href="${richiediAggiungiVeicolo}">Aggiungi veicolo</a>
-
-<c:url var="richiediAggiungiUtente" value="UtenteServlet">
-    <c:param name="comando" value="richiediAggiungiUtente"/>
-</c:url>
-<a href="${richiediAggiungiUtente}">Inserisci customer</a>
-
-<c:url var="visualizzaAllPrenotazioni" value="PrenotazioneServlet">
-    <c:param name="comando" value="visualizzaAllPrenotazioni"/>
-</c:url>
-<a href="${visualizzaAllPrenotazioni}">Lista prenotazioni</a>
-
-<br>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Benvenuto ${utente.nome} ${utente.cognome}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" style="margin: 1px">
+                    <c:url var="richiediAggiungiVeicolo" value="VeicoloServlet">
+                        <c:param name="comando" value="richiediAggiungiVeicolo"/>
+                    </c:url>
+                    <a class="btn btn-secondary" href="${richiediAggiungiVeicolo}"> Aggiungi un veicolo </a>
+                </li>
+                <li class="nav-item" style="margin: 1px">
+                    <c:url var="richiediAggiungiUtente" value="UtenteServlet">
+                        <c:param name="comando" value="richiediAggiungiUtente"/>
+                    </c:url>
+                    <a class="btn btn-secondary" href="${richiediAggiungiUtente}"> Aggiungi un utente </a>
+                </li>
+                <li class="nav-item" style="margin: 1px">
+                    <c:url var="visualizzaAllPrenotazioni" value="PrenotazioneServlet">
+                        <c:param name="comando" value="visualizzaAllPrenotazioni"/>
+                    </c:url>
+                    <a class="btn btn-secondary" href="${visualizzaAllPrenotazioni}"> Visualizza tutte le
+                        prenotazioni </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <form action="UtenteServlet" method="post">
-    <input type="hidden" name="comando" value="filtraUtenti">
-    Filtra per:<select name="filtraPer">
-    <option value="Nome"> Nome</option>
-    <option value="Cognome"> Cognome</option>
-</select>
-    Testo da cercare: <input type="text" name="text">
-    <input type="submit" name="Cerca">
+    <div class="input-group">
+        <span class="input-group-text">Cerca utente per: </span>
+        <select class="form-select" name="filtraPer">
+            <option value="Nome"> Nome</option>
+            <option value="Cognome"> Cognome</option>
+        </select>
+        <span class="input-group-text">Testo da cercare: </span>
+        <input type="text" name="text" class="form-control">
+        <input type="hidden" name="comando" value="filtraUtenti">
+        <input type="submit" name="Cerca">
+    </div>
 </form>
 <br>
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>Nome</th>
         <th>Cognome</th>
@@ -86,8 +100,6 @@
         </tr>
     </c:forEach>
 </table>
-
-
 
 
 </body>

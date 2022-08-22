@@ -14,30 +14,43 @@
 </head>
 <body>
 <%@include file="../header.jsp" %>
-<h1>Profilo customer</h1>
-<h2>Benvenuto ${utente.nome} ${utente.cognome}</h2>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Benvenuto ${utente.nome} ${utente.cognome}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" style="margin: 1px">
+                    <c:url var="visualizzaVeicoli" value="VeicoloServlet">
+                        <c:param name="comando" value="visualizzaVeicoli"/>
+                    </c:url>
+                    <a class="btn btn-secondary" href="${visualizzaVeicoli}"> Visualizza veicoli </a>
+                </li>
+                <li class="nav-item" style="margin: 1px">
+                    <c:url var="richiediPrenotazioneByDates" value="PrenotazioneServlet">
+                        <c:param name="comando" value="richiediPrenotazioneByDates"/>
+                    </c:url>
+                    <a class="btn btn-secondary" href="${richiediPrenotazioneByDates}"> Prenota veicolo </a>
+                </li>
+                <li class="nav-item" style="margin: 1px">
+                    <form action="UtenteServlet" method="post">
+                        <input type="hidden" name="comando" value="richiediModificaUtente">
+                        <input type="hidden" name="id" value="${utente.id}">
+                        <input class="btn btn-secondary" type="submit" value="Modifica i tuoi dati ">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<c:url var="visualizzaVeicoli" value="VeicoloServlet">
-    <c:param name="comando" value="visualizzaVeicoli"/>
-</c:url>
-<a href="${visualizzaVeicoli}">
-    <button>Visualizza veicoli</button>
-</a>
+
+
+
 <br>
-<c:url var="richiediPrenotazioneByDates" value="PrenotazioneServlet">
-    <c:param name="comando" value="richiediPrenotazioneByDates"/>
-</c:url>
-<a href="${richiediPrenotazioneByDates}">
-    <button>Prenota un veicolo</button>
-</a>
-<br>
-<form action="UtenteServlet" method="post">
-    <input type="hidden" name="comando" value="richiediModificaUtente">
-    <input type="hidden" name="id" value="${utente.id}">
-    <input type="submit" value="Modifica i tuoi dati">
-</form>
-<br>
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>Data inizio</th>
         <th>Data fine</th>

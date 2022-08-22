@@ -22,7 +22,7 @@
 <br>
 <c:choose>
     <c:when test="${clienti.size()>0}">
-        <table border="1">
+        <table class="table table-bordered">
             <tr>
                 <th>Nome</th>
                 <th>Cognome</th>
@@ -37,20 +37,23 @@
                     <td>${cliente.cognome}</td>
                     <td>${cliente.dataNascita}</td>
                     <td>
-                        <form action="VisualizzaPrenotazioni" method="post">
+                        <form action="PrenotazioneServlet" method="post">
+                            <input type="hidden" name="comando" value="visualizzaPrenotazioni">
                             <input type="hidden" name="id" value="${cliente.id}">
                             <input type="submit" value="Visualizza">
                         </form>
                     </td>
                     <td>
-                        <form action="RichiediModificaProfilo" method="post">
+                        <form action="UtenteServlet" method="post">
+                            <input type="hidden" name="comando" value="richiediModificaUtenteBySuperUser">
                             <input type="hidden" name="id" value="${cliente.id}">
                             <input type="submit" value="Modifica">
                         </form>
                     </td>
                     </td>
                     <td>
-                        <form action="EliminaProfilo" method="post">
+                        <form action="UtenteServlet" method="post">
+                            <input type="hidden" name="comando" value="elimina">
                             <input type="hidden" name="id" value="${cliente.id}">
                             <input type="submit" value="Elimina">
                         </form>

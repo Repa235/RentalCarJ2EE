@@ -85,13 +85,18 @@ public class VeicoloDAO {
         CriteriaQuery<Veicolo> cr = cb.createQuery(Veicolo.class);
         Root<Prenotazione> root = cr.from(Prenotazione.class);
 
-        Predicate[] predicates = new Predicate[5];
-        predicates[0] = cb.between(root.<LocalDate>get("dataInizio"), dataSceltaI, dataSceltaF);
-        predicates[1] = cb.between(root.<LocalDate>get("dataFine"), dataSceltaI, dataSceltaF);
-        predicates[2] = cb.equal(root.<Boolean>get("isApprovato"), true);
-        predicates[3] = cb.lessThanOrEqualTo(root.<LocalDate>get("dataInizio"), dataSceltaI);
-        predicates[4] = cb.greaterThan(root.<LocalDate>get("dataFine"), dataSceltaF);
-        cr.select(root.get("veicolo")).where(predicates);
+        Predicate checkLimitInizio = cb.lessThanOrEqualTo(root.<LocalDate>get("dataInizio"),dataSceltaI);
+        Predicate checkLimitFine = cb.greaterThanOrEqualTo(root.<LocalDate>get("dataFine"),dataSceltaF);
+        Predicate limits = cb.and(checkLimitFine, checkLimitInizio);
+
+        Predicate checkInizio = cb.between(root.<LocalDate>get("dataInizio"), dataSceltaI, dataSceltaF);
+        Predicate checkfine = cb.between(root.<LocalDate>get("dataFine"), dataSceltaI, dataSceltaF);
+        Predicate dates = cb.or(checkInizio,checkfine,limits);
+
+
+        Predicate approved = cb.equal(root.<Boolean>get("isApprovato"), true);
+        Predicate totale = cb.and(dates,approved);
+        cr.select(root.get("veicolo")).where(totale);
 
         Query<Veicolo> query = session.createQuery(cr);
         List<Veicolo> veicoliPrenotatiNelRange = query.getResultList();
@@ -100,9 +105,8 @@ public class VeicoloDAO {
         //mi prendo tutti i veicoli che non ricadono in questa lista
         List<Veicolo> veicoliLiberiNelRange = new ArrayList<Veicolo>();
         if (veicoliPrenotatiNelRange.isEmpty()) {
-            return veicoliLiberiNelRange;
+            veicoliLiberiNelRange = getVeicoli();
         } else {
-
             CriteriaBuilder cb2 = session.getCriteriaBuilder();
             CriteriaQuery<Veicolo> cr2 = cb.createQuery(Veicolo.class);
             Root<Veicolo> root2 = cr2.from(Veicolo.class);
@@ -111,9 +115,9 @@ public class VeicoloDAO {
             cr2.select(root2).where(nonInLista);
             Query<Veicolo> query2 = session.createQuery(cr2);
             veicoliLiberiNelRange = query2.getResultList();
-
-            return veicoliLiberiNelRange;
         }
-
+        return veicoliLiberiNelRange;
     }
+
 }
+

@@ -11,16 +11,18 @@
     <title>Prenota by data</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <h1> Prenota un veicolo </h1>
 <p>Seleziona il range che ti interessa</p>
 <form action="PrenotazioneServlet" method="post">
-    <input type="hidden" name="comando" value="visualizzaVeicoliDisponibili">
-    Data inizio: <input name="dataInizio" type="date">
-    <br>
-    Data fine: <input name="dataFine" type="date">
-    <br>
-    <input type="submit" value="Cerca veicoli">
+    <div class="input-group flex-nowrap">
+        <input type="hidden" name="comando" value="visualizzaVeicoliDisponibili">
+        <span class="input-group-text" id="addon-wrapping">Data inizio</span>
+        <input class="form-control" name="dataInizio" type="date">
+        <span class="input-group-text">Data fine</span>
+        <input class="form-control" name="dataFine" type="date">
+        <input type="submit" value="Cerca veicoli">
+    </div>
 </form>
 
 </body>

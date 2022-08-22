@@ -14,7 +14,7 @@
 <%@include file="../header.jsp"%>
 <h1> Prenota un veicolo </h1>
 <p>Veicoli disponibili dal ${dataInizio} al ${dataFine}</p>
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>Casa costruttrice</th>
         <th>Modello</th>

@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -91,7 +92,10 @@ public class UtenteDAO {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
         Root<Utente> root = cr.from(Utente.class);
-        cr.select(root).where(cb.like(root.get("nome"), "%"+nome+"%"));
+        Predicate filtername = cb.like(root.get("nome"), "%"+nome+"%");
+        Predicate customer = cb.like(root.get("tipo"), "customer");
+        Predicate andN = cb.and(filtername,customer);
+        cr.select(root).where(andN);
         Query<Utente> query = session.createQuery(cr);
         List<Utente> results = query.getResultList();
         return  results;
@@ -102,7 +106,10 @@ public class UtenteDAO {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
         Root<Utente> root = cr.from(Utente.class);
-        cr.select(root).where(cb.like(root.get("cognome"), "%"+cognome+"%"));
+        Predicate filtersurname = cb.like(root.get("cognome"), "%"+cognome+"%");
+        Predicate customer = cb.like(root.get("tipo"), "customer");
+        Predicate andS = cb.and(filtersurname,customer);
+        cr.select(root).where(andS);
         Query<Utente> query = session.createQuery(cr);
         List<Utente> results = query.getResultList();
         return  results;
