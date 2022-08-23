@@ -111,7 +111,7 @@ public class PrenotazioneServlet extends HttpServlet {
         String dataFineString = request.getParameter("dataFine");
         LocalDate dataInizio = LocalDate.parse(dataInizioString);
         LocalDate dataFine = LocalDate.parse(dataFineString);
-        if (id_string!=null){
+        if (id_string!=null || id_string!=""){
             Long id = Long.parseLong(id_string);
             Prenotazione p = pd.getPrenotazione(id);
             Veicolo veicolo = vd.getVeicolo(Long.parseLong(request.getParameter("veicolo")));

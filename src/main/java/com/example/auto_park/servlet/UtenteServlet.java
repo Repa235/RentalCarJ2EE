@@ -87,7 +87,7 @@ public class UtenteServlet extends HttpServlet {
     }
 
     public void richiediAggiungiUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Utente/formAggiungiUtente.jsp").forward(request, response);
+        request.getRequestDispatcher("Utente/formModificaAggiungiUtente.jsp").forward(request, response);
     }
 
     public void profiloCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -129,7 +129,7 @@ public class UtenteServlet extends HttpServlet {
         String tipo = "customer";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        if (id_string==null) {
+        if (id_string==null || id_string=="") {
             Utente u = new Utente(nome, cognome, dataNascita, tipo, username, password, null);
             ud.saveOrUpdateUtente(u);
             response.sendRedirect("UtenteServlet?comando=profiloUtente");
@@ -157,14 +157,14 @@ public class UtenteServlet extends HttpServlet {
         Long idCustomer = Long.parseLong(request.getParameter("id"));
         Utente uM = ud.getUtente(idCustomer);
         request.setAttribute("utenteDaModificare", uM);
-        request.getRequestDispatcher("Utente/formModificaUtente.jsp").forward(request, response);
+        request.getRequestDispatcher("Utente/formModificaAggiungiUtente.jsp").forward(request, response);
     }
 
     public void richiedimodificaUtenteBySuperUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long idCustomer = Long.parseLong(request.getParameter("id"));
         Utente uM = ud.getUtente(idCustomer);
         request.setAttribute("utenteDaModificare", uM);
-        request.getRequestDispatcher("Utente/formModificaUtente.jsp").forward(request, response);
+        request.getRequestDispatcher("Utente/formModificaAggiungiUtente.jsp").forward(request, response);
     }
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
