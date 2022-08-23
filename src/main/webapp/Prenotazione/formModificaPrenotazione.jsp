@@ -20,7 +20,7 @@
 
 <form action="PrenotazioneServlet" method="post" style="width: 700px">
     <div class="input-group flex-nowrap">
-        <input type="hidden" name="comando" value="modificaPrenotazione">
+        <input type="hidden" name="comando" value="modificaAggiungiPrenotazione">
         <input type="hidden" name="idPrenotazione" value="${prenotazione.id}">
         <span class="input-group-text" id="addon-wrapping">Data inizio</span>
         <input class="form-control" name="dataInizio" type="date" value="${requestScope.prenotazione.dataInizio}">

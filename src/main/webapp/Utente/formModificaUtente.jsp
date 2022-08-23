@@ -12,7 +12,7 @@
 <br/>
 <form action="UtenteServlet" method="post">
     <input type="hidden" name="id" value="${utenteDaModificare.id}">
-    <input type="hidden" name="comando" value="modifica">
+    <input type="hidden" name="comando" value="modificaAggiungi">
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">Nome</span>
         <input  class="form-control"  type="text" name="nome" value="${utenteDaModificare.nome}">

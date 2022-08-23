@@ -42,7 +42,8 @@ public class UtenteServlet extends HttpServlet {
                 logout(request, response);
                 break;
             default:
-                errore("Si è verificato un errore", request,response);;
+                errore("Si è verificato un errore", request, response);
+                ;
         }
     }
 
@@ -50,14 +51,11 @@ public class UtenteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String comando = request.getParameter("comando");
         switch (comando) {
-            case "aggiungi":
-                aggiungiUtente(request, response);
-                break;
             case "elimina":
                 eliminaUtente(request, response);
                 break;
-            case "modifica":
-                modificaUtente(request, response);
+            case "modificaAggiungi":
+                modificaAggiungiUtente(request, response);
                 break;
             case "login":
                 login(request, response);
@@ -72,7 +70,7 @@ public class UtenteServlet extends HttpServlet {
                 richiedimodificaUtenteBySuperUser(request, response);
                 break;
             default:
-                errore("Si è verificato un errore", request,response);
+                errore("Si è verificato un errore", request, response);
         }
 
     }
@@ -123,16 +121,24 @@ public class UtenteServlet extends HttpServlet {
     }
 
 
-    public void aggiungiUtente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void modificaAggiungiUtente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id_string = request.getParameter("id");
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         LocalDate dataNascita = LocalDate.parse(request.getParameter("dataNascita"));
         String tipo = "customer";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        Utente u = new Utente(nome, cognome, dataNascita, tipo, username, password, null);
-        ud.saveOrUpdateUtente(u);
-        response.sendRedirect("UtenteServlet?comando=profiloUtente");
+        if (id_string==null) {
+            Utente u = new Utente(nome, cognome, dataNascita, tipo, username, password, null);
+            ud.saveOrUpdateUtente(u);
+            response.sendRedirect("UtenteServlet?comando=profiloUtente");
+        } else {
+            Long id = Long.parseLong(id_string);
+            Utente uM = new Utente(id, nome, cognome, dataNascita, tipo, username, password, null);
+            ud.saveOrUpdateUtente(uM);
+            response.sendRedirect("UtenteServlet?comando=profiloUtente");
+        }
     }
 
     public void eliminaUtente(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -144,19 +150,6 @@ public class UtenteServlet extends HttpServlet {
             e.printStackTrace();
             errore("Eliminazione fallita, l'utente selezionato potrebbe avere delle prenotazioni in sospeso", request, response);
         }
-        response.sendRedirect("UtenteServlet?comando=profiloUtente");
-    }
-
-    public void modificaUtente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
-        LocalDate dataNascita = LocalDate.parse(request.getParameter("dataNascita"));
-        String tipo = "customer";
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        Utente uM = new Utente(id, nome, cognome, dataNascita, tipo, username, password, null);
-        ud.saveOrUpdateUtente(uM);
         response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
 
@@ -197,20 +190,9 @@ public class UtenteServlet extends HttpServlet {
         String filtraPer = request.getParameter("filtraPer");
         String text = request.getParameter("text");
         List<Utente> filtered;
-        switch (filtraPer) {
-            case "Nome":
-                filtered = ud.getUtentiFiltratiByNome(text);
-                request.setAttribute("clienti", filtered);
-                request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
-                break;
-            case "Cognome":
-                filtered = ud.getUtentiFiltratiByCognome(text);
-                request.setAttribute("clienti", filtered);
-                request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
-                break;
-            default:
-                errore("Nessun parametro selezionato", request, response);
-        }
+        filtered = ud.getCustomerByParam(filtraPer,text);
+        request.setAttribute("clienti", filtered);
+        request.getRequestDispatcher("Utente/filtrati.jsp").forward(request, response);
     }
 
 }

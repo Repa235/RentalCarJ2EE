@@ -82,12 +82,12 @@ public class UtenteDAO {
         return  results;
     }
 
-    public List<Utente> getUtentiFiltratiByNome(String nome) {
+    public List<Utente> getCustomerByParam(String filtro, String testo) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
         Root<Utente> root = cr.from(Utente.class);
-        Predicate filtername = cb.like(root.get("nome"), "%"+nome+"%");
+        Predicate filtername = cb.like(root.get(filtro), "%"+testo+"%");
         Predicate customer = cb.like(root.get("tipo"), "customer");
         Predicate andN = cb.and(filtername,customer);
         cr.select(root).where(andN);
@@ -96,17 +96,4 @@ public class UtenteDAO {
         return  results;
     }
 
-    public List<Utente> getUtentiFiltratiByCognome(String cognome) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Utente> cr = cb.createQuery(Utente.class);
-        Root<Utente> root = cr.from(Utente.class);
-        Predicate filtersurname = cb.like(root.get("cognome"), "%"+cognome+"%");
-        Predicate customer = cb.like(root.get("tipo"), "customer");
-        Predicate andS = cb.and(filtersurname,customer);
-        cr.select(root).where(andS);
-        Query<Utente> query = session.createQuery(cr);
-        List<Utente> results = query.getResultList();
-        return  results;
-    }
 }

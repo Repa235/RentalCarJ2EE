@@ -30,7 +30,7 @@
                 <input type="hidden" name="idVeicolo" value="${ve.id}">
                 <input type="hidden" name="dataInizio" value="${dataInizio}">
                 <input type="hidden" name="dataFine" value="${dataFine}">
-                <input type="hidden" name="comando" value="aggiungiPrenotazione">
+                <input type="hidden" name="comando" value="modificaAggiungiPrenotazione">
                 <input type="submit" value="Prenota">
                 </form>
             </td>

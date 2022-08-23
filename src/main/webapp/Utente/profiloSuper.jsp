@@ -51,8 +51,8 @@
     <div class="input-group">
         <span class="input-group-text">Cerca utente per: </span>
         <select class="form-select" name="filtraPer">
-            <option value="Nome"> Nome</option>
-            <option value="Cognome"> Cognome</option>
+            <option value="nome"> Nome</option>
+            <option value="cognome"> Cognome</option>
         </select>
         <span class="input-group-text">Testo da cercare: </span>
         <input type="text" name="text" class="form-control">

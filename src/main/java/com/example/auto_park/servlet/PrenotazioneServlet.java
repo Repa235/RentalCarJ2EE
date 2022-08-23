@@ -53,11 +53,8 @@ public class PrenotazioneServlet extends HttpServlet {
             case "approvaPrenotazione":
                 approvaPrenotazione(request, response);
                 break;
-            case "modificaPrenotazione":
-                modificaPrenotazione(request, response);
-                break;
-            case "aggiungiPrenotazione":
-                aggiungiPrenotazione(request, response);
+            case "modificaAggiungiPrenotazione":
+                modificaAggiungiPrenotazione(request, response);
                 break;
             case "visualizzaPrenotazioni":
                 visualizzaPrenotazioni(request, response);
@@ -108,47 +105,44 @@ public class PrenotazioneServlet extends HttpServlet {
         }
     }
 
-    private void modificaPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Prenotazione p = pd.getPrenotazione(Long.parseLong(request.getParameter("idPrenotazione")));
-        String dataInizioString = request.getParameter("dataInizio");
-        String dataFineString = request.getParameter("dataFine");
-        Veicolo veicolo = vd.getVeicolo(Long.parseLong(request.getParameter("veicolo")));
-        LocalDate dataInizio = LocalDate.parse(dataInizioString);
-        LocalDate dataFine = LocalDate.parse(dataFineString);
-        List<Veicolo> liberiNelRange = vd.getVeicoliLiberiNelRange(dataInizio,dataFine);
-       if(liberiNelRange.contains(veicolo)) {
-           if (dataFine.isAfter(dataInizio)) {
-               PrenotazioneDAO pd = new PrenotazioneDAO();
-               p.setDataInizio(dataInizio);
-               p.setDataFine(dataFine);
-               p.setVeicolo(veicolo);
-               p.setApprovato(false);
-               pd.saveOrUpdatePrenotazione(p);
-               response.sendRedirect("UtenteServlet?comando=profiloUtente");
-           } else {
-               System.out.println("La data di fine è precedente alla data di inizio");
-               response.sendRedirect("UtenteServlet?comando=profiloUtente");
-           }
-       } else {
-           errore("Il veicolo indicato risulta occupato nell'intervallo scelto",request,response);
-       }
-
-    }
-
-    private void aggiungiPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        long idUtente = Long.parseLong(request.getParameter("idUtente"));
-        long idVeicolo = Long.parseLong(request.getParameter("idVeicolo"));
+    private void modificaAggiungiPrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String id_string = request.getParameter("idPrenotazione");
         String dataInizioString = request.getParameter("dataInizio");
         String dataFineString = request.getParameter("dataFine");
         LocalDate dataInizio = LocalDate.parse(dataInizioString);
         LocalDate dataFine = LocalDate.parse(dataFineString);
-        if (dataFine.isAfter(dataInizio)) {
-            Veicolo v = vd.getVeicolo(idVeicolo);
-            Utente u = ud.getUtente(idUtente);
-            Prenotazione p = new Prenotazione(u, v, dataInizio, dataFine, false);
-            pd.saveOrUpdatePrenotazione(p);
+        if (id_string!=null){
+            Long id = Long.parseLong(id_string);
+            Prenotazione p = pd.getPrenotazione(id);
+            Veicolo veicolo = vd.getVeicolo(Long.parseLong(request.getParameter("veicolo")));
+            List<Veicolo> liberiNelRange = vd.getVeicoliLiberiNelRange(dataInizio,dataFine);
+            if(liberiNelRange.contains(veicolo)) {
+                if (dataFine.isAfter(dataInizio)) {
+                    PrenotazioneDAO pd = new PrenotazioneDAO();
+                    p.setDataInizio(dataInizio);
+                    p.setDataFine(dataFine);
+                    p.setVeicolo(veicolo);
+                    p.setApprovato(false);
+                    pd.saveOrUpdatePrenotazione(p);
+                    response.sendRedirect("UtenteServlet?comando=profiloUtente");
+                } else {
+                    System.out.println("La data di fine è precedente alla data di inizio");
+                    response.sendRedirect("UtenteServlet?comando=profiloUtente");
+                }
+            } else {
+                errore("Il veicolo indicato risulta occupato nell'intervallo scelto",request,response);
+            }
+        } else {
+            long idUtente = Long.parseLong(request.getParameter("idUtente"));
+            long idVeicolo = Long.parseLong(request.getParameter("idVeicolo"));
+            if (dataFine.isAfter(dataInizio)) {
+                Veicolo v = vd.getVeicolo(idVeicolo);
+                Utente u = ud.getUtente(idUtente);
+                Prenotazione p = new Prenotazione(u, v, dataInizio, dataFine, false);
+                pd.saveOrUpdatePrenotazione(p);
+            }
+            response.sendRedirect("UtenteServlet?comando=profiloUtente");
         }
-        response.sendRedirect("UtenteServlet?comando=profiloUtente");
     }
 
     private void visualizzaPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws
@@ -158,7 +152,7 @@ public class PrenotazioneServlet extends HttpServlet {
         Utente u = ud.getUtente(idUtente);
         Set<Prenotazione> lp = u.getPrenotazioni();
         request.setAttribute("listaprenotazioni", lp);
-        request.getRequestDispatcher("Prenotazione/visualizzaPrenotazioni.jsp").forward(request, response);
+        request.getRequestDispatcher("Prenotazione/visualizzaAllPrenotazioni.jsp").forward(request, response);
     }
 
     private void richiediPrenotazioneVeicolo(HttpServletRequest request, HttpServletResponse response) throws
@@ -203,7 +197,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
     private void richiediPrenotazioneByDates(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        request.getRequestDispatcher("Prenotazione/formPrenotaByDates.jsp").forward(request, response);
+        request.getRequestDispatcher("Prenotazione/formSelezionaDatePrenotazione.jsp").forward(request, response);
     }
 
     private void visualizzaVeicoliDisponibili(HttpServletRequest request, HttpServletResponse response) throws
@@ -215,11 +209,10 @@ public class PrenotazioneServlet extends HttpServlet {
         PrenotazioneDAO pd = new PrenotazioneDAO();
         VeicoloDAO vd = new VeicoloDAO();
         List<Veicolo> veicoliDisponibili = vd.getVeicoliLiberiNelRange(dataInizio,dataFine);
-
         request.setAttribute("dataInizio", dataInizioString);
         request.setAttribute("dataFine", dataFineString);
         request.setAttribute("veicoliDisponibili", veicoliDisponibili);
-        request.getRequestDispatcher("Prenotazione/prenotaByDates.jsp").forward(request, response);
+        request.getRequestDispatcher("Prenotazione/formSelezionaVeicolo.jsp").forward(request, response);
     }
 
 }

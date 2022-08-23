@@ -11,7 +11,7 @@
 <br/>
 <form action="UtenteServlet" method="post" style="width: 700px">
     <div class="input-group flex-nowrap">
-        <input type="hidden" name="comando" value="aggiungi">
+        <input type="hidden" name="comando" value="modificaAggiungi">
         <span class="input-group-text" id="addon-wrapping">Nome</span>
         <input  class="form-control"  type="text" name="nome">
         <span class="input-group-text" id="addon-wrapping">Cogome</span>
